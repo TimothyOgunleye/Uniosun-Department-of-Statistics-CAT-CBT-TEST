@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exam – OSUN STATE UNIVERSITY, OSOGBO, NIGERIA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        /* ── Disable text selection, copying, and printing ── */
+        * {
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        /* Allow selection only on input fields and buttons (for usability) */
+        input[type="radio"],
+        input[type="checkbox"],
+        button,
+        .btn,
+        .page-btn,
+        .palette-btn,
+        .flag-btn {
+            -webkit-user-select: auto;
+            -moz-user-select: auto;
+            -ms-user-select: auto;
+            user-select: auto;
+        }
+
+        /* Prevent printing */
+        @media print {
+            body {
+                display: none !important;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --emerald-900: #0b3a2c;
+            --emerald-700: #12583f;
+            --emerald-600: #187b58;
+            --emerald-50: #eaf3ef;
+            --gold: #d9a441;
+            --gold-light: #ecc276;
+            --red: #b3452c;
+            --red-50: #fbeeea;
+            --ink: #16211c;
+            --muted: #6b7a72;
+            --bg: #f5f7f6;
+            --line: #e5eae7;
+            --white: #ffffff;
+        }
+
+        html,
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            min-height: 100vh;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Sora', sans-serif;
+        }
+
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: var(--white);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .site-header-inner {
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .site-header-inner img {
+            width: 34px;
+            height: 34px;
+            object-fit: contain;
+        }
+
+        .site-header-inner .brand-text h1 {
+            font-size: 12.5px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .site-header-inner .brand-text p {
+            font-size: 10.5px;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 55px;
+            z-index: 35;
+            background: var(--emerald-900);
+            color: var(--white);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .topbar .who {
+            font-size: 12.5px;
+            line-height: 1.5;
+        }
+
+        .topbar .who .exam-title {
+            display: block;
+            font-family: 'Sora', sans-serif;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: .6px;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            margin-bottom: 6px;
+        }
+
+        .topbar .who b {
+            font-family: 'Sora', sans-serif;
+            font-size: 13.5px;
+        }
+
+        .topbar .who .meta-line {
+            display: block;
+            color: rgba(255, 255, 255, .72);
+            margin-top: 2px;
+        }
+
+        .topbar .who .meta-line span:not(:last-child)::after {
+            content: '·';
+            margin: 0 6px;
+            color: rgba(255, 255, 255, .4);
+        }
+
+        .timer-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            flex-shrink: 0;
+        }
+
+        .timer-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            color: rgba(255, 255, 255, .72);
+        }
+
+        .timer {
+            background: rgba(255, 255, 255, .12);
+            border: 1px solid rgba(255, 255, 255, .2);
+            border-radius: 10px;
+            padding: 8px 16px;
+            font-family: 'Sora', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            letter-spacing: .5px;
+            min-width: 92px;
+            text-align: center;
+        }
+
+        .timer.warn {
+            background: rgba(217, 164, 65, .25);
+            border-color: var(--gold);
+        }
+
+        .timer.danger {
+            background: rgba(179, 69, 44, .35);
+            border-color: var(--red);
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: .6;
+            }
+        }
+
+        .exam-layout {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 20px 18px 120px;
+            display: grid;
+            grid-template-columns: 1fr 250px;
+            gap: 22px;
+            align-items: start;
+        }
+
+        .palette-side {
+            position: sticky;
+            top: 135px;
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 16px;
+            max-height: calc(100vh - 160px);
+            overflow-y: auto;
+            order: 2;
+        }
+
+        .palette-side h4 {
+            font-size: 11.5px;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+            color: var(--muted);
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .palette-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
+        }
+
+        .palette-btn {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            border-radius: 8px;
+            border: 1.5px solid var(--line);
+            background: var(--white);
+            color: var(--muted);
+            font-size: 11.5px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .palette-btn.answered {
+            background: var(--emerald-600);
+            border-color: var(--emerald-600);
+            color: var(--white);
+        }
+
+        .palette-summary {
+            font-size: 11.5px;
+            color: var(--muted);
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--line);
+        }
+
+        .q-card {
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 18px 20px;
+            margin-bottom: 14px;
+            scroll-margin-top: 140px;
+        }
+
+        .q-card.current {
+            border-color: var(--emerald-600);
+            box-shadow: 0 0 0 3px var(--emerald-50);
+        }
+
+        .q-head {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: flex-start;
+        }
+
+        .flag-btn {
+            flex-shrink: 0;
+            width: 26px;
+            height: 26px;
+            border-radius: 7px;
+            border: 1.5px solid var(--line);
+            background: var(--white);
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .flag-btn:hover {
+            border-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .flag-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .flag-btn.flagged {
+            background: var(--gold-light);
+            border-color: var(--gold);
+            color: var(--emerald-900);
+        }
+
+        .flag-btn.flagged svg {
+            fill: currentColor;
+        }
+
+        .q-card.flagged {
+            border-color: var(--line);
+            box-shadow: none;
+        }
+
+        .palette-btn.flagged:not(.answered) {
+            border-color: var(--gold);
+            color: var(--emerald-900);
+            background: var(--gold-light);
+        }
+
+        .palette-btn.flagged.answered {
+            box-shadow: inset 0 0 0 2px var(--gold);
+        }
+
+        .q-num {
+            flex-shrink: 0;
+            width: 26px;
+            height: 26px;
+            border-radius: 7px;
+            background: var(--emerald-50);
+            color: var(--emerald-900);
+            font-size: 12px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .q-text {
+            font-size: 14px;
+            line-height: 1.55;
+            white-space: pre-wrap;
+        }
+
+        .opt-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-left: 36px;
+        }
+
+        .opt-btn {
+            text-align: left;
+            border: 1.5px solid var(--line);
+            background: var(--bg);
+            border-radius: 9px;
+            padding: 10px 13px;
+            font-size: 13.5px;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .opt-btn input[type="radio"] {
+            flex-shrink: 0;
+            width: 17px;
+            height: 17px;
+            accent-color: var(--emerald-700);
+            cursor: pointer;
+        }
+
+        .opt-btn .tag {
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            border: 1.5px solid var(--line);
+            font-size: 10.5px;
+            font-weight: 700;
+            color: var(--muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .opt-btn .opt-text {
+            flex: 1;
+        }
+
+        .opt-btn:hover {
+            border-color: var(--emerald-600);
+        }
+
+        .pagination-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 4px 4px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .pagination-bar span {
+            font-size: 12.5px;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .pagination-info-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px 4px 14px;
+        }
+
+        .pagination-info-bar span {
+            font-size: 12.5px;
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .page-btn {
+            border: 1.5px solid var(--line);
+            background: var(--white);
+            color: var(--emerald-900);
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 12.5px;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+        }
+
+        .page-btn:hover:not(:disabled) {
+            border-color: var(--emerald-600);
+        }
+
+        .page-btn:disabled {
+            color: var(--line);
+            cursor: not-allowed;
+        }
+
+        .submit-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            border-top: 1px solid var(--line);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            z-index: 30;
+            flex-wrap: wrap;
+        }
+
+        .submit-bar .status {
+            font-size: 12.5px;
+            color: var(--muted);
+        }
+
+        .btn {
+            border: none;
+            border-radius: 9px;
+            padding: 11px 22px;
+            font-size: 13.5px;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--emerald-700);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--emerald-600);
+        }
+
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(11, 22, 17, .5);
+            backdrop-filter: blur(2px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            padding: 20px;
+        }
+
+        .overlay.show {
+            display: flex;
+        }
+
+        .dialog {
+            background: var(--white);
+            border-radius: 18px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 24px 60px rgba(11, 58, 44, .25);
+            overflow: hidden;
+        }
+
+        .dialog-head {
+            padding: 22px 26px 16px;
+            background: linear-gradient(135deg, var(--emerald-700), var(--emerald-900));
+            color: var(--white);
+        }
+
+        .dialog-head h3 {
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .dialog-head p {
+            font-size: 12px;
+            color: rgba(255, 255, 255, .8);
+        }
+
+        .dialog-body {
+            padding: 20px 26px;
+            font-size: 13.5px;
+            line-height: 1.6;
+            color: var(--ink);
+        }
+
+        .dialog-foot {
+            padding: 6px 26px 24px;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .btn-ghost {
+            background: none;
+            color: var(--muted);
+            border: 1.5px solid var(--line);
+        }
+
+        .btn-ghost:hover {
+            background: var(--bg);
+        }
+
+        .center-screen {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+        }
+
+        .center-card {
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 40px 34px;
+            max-width: 440px;
+            text-align: center;
+            box-shadow: 0 14px 34px rgba(11, 58, 44, .08);
+        }
+
+        .center-card .icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--emerald-50);
+            color: var(--emerald-700);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 18px;
+        }
+
+        .center-card h2 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .center-card p {
+            font-size: 13.5px;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+
+        .center-card .score {
+            font-family: 'Sora', sans-serif;
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--emerald-900);
+            margin-bottom: 4px;
+        }
+
+        @media (max-width: 800px) {
+            .exam-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .palette-side {
+                position: static;
+                order: 2;
+                max-height: none;
+                margin-bottom: 4px;
+            }
+
+            .palette-grid {
+                grid-template-columns: repeat(8, 1fr);
+            }
+        }
+
+        @media (max-width: 560px) {
+            .site-header-inner {
+                padding: 8px 14px;
+                gap: 8px;
+            }
+
+            .site-header-inner img {
+                width: 28px;
+                height: 28px;
+            }
+
+            .site-header-inner .brand-text h1 {
+                font-size: 11px;
+            }
+
+            .site-header-inner .brand-text p {
+                font-size: 9.5px;
+            }
+
+            .topbar {
+                top: 47px;
+                padding: 10px 14px;
+                gap: 10px;
+                justify-content: space-between;
+            }
+
+            .topbar .who {
+                font-size: 11.5px;
+            }
+
+            .timer {
+                min-width: 78px;
+                font-size: 15px;
+                padding: 7px 12px;
+            }
+
+            .exam-layout {
+                padding: 14px 12px 130px;
+                gap: 14px;
+            }
+
+            .q-card {
+                padding: 14px 14px;
+            }
+
+            .opt-list {
+                margin-left: 0;
+            }
+
+            .q-head {
+                gap: 8px;
+            }
+
+            .q-text {
+                font-size: 13px;
+            }
+
+            .opt-btn {
+                font-size: 13px;
+                padding: 9px 11px;
+            }
+
+            .palette-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+
+            .submit-bar {
+                padding: 10px 14px;
+            }
+
+            .btn {
+                padding: 10px 16px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .palette-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+
+            .timer {
+                min-width: 68px;
+                font-size: 13.5px;
+                padding: 6px 10px;
+            }
+
+            .topbar .who b {
+                font-size: 12.5px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loadingScreen" class="center-screen">
+        <div class="center-card">
+            <h2>Loading your exam…</h2>
+            <p>Please wait while we prepare your questions.</p>
+        </div>
+    </div>
+
+    <div id="examRoot" style="display:none;">
+        <header class="site-header">
+            <div class="site-header-inner">
+                <img src="3080.png" alt="Osun State University crest">
+                <div class="brand-text">
+                    <h1>Osun State University, Osogbo</h1>
+                    <p>College of Science, Engineering &amp; Technology</p>
+                </div>
+            </div>
+        </header>
+
+        <div class="topbar">
+            <div class="who">
+                <span class="exam-title">CAT CBT Mid Examination (<span id="whoCourse">&nbsp;</span>)</span>
+                <b id="whoName">&nbsp;</b>
+                <span class="meta-line" id="whoMeta">&nbsp;</span>
+            </div>
+            <div class="timer-wrap">
+                <span class="timer-label">Time Left</span>
+                <div class="timer" id="timerBox">30:00</div>
+            </div>
+        </div>
+
+        <div class="exam-layout">
+            <main id="questionList"></main>
+            <aside class="palette-side">
+                <h4>Question Navigator</h4>
+                <div class="palette-grid" id="paletteScroll"></div>
+                <div class="palette-summary" id="paletteSummary">0 of 0 answered</div>
+            </aside>
+        </div>
+
+        <div class="submit-bar">
+            <span class="status" id="submitStatus">0 unanswered</span>
+            <button class="btn btn-primary" id="submitBtn">Submit exam</button>
+        </div>
+    </div>
+
+    <div class="overlay" id="confirmOverlay">
+        <div class="dialog">
+            <div class="dialog-head">
+                <h3>Submit your exam?</h3>
+                <p>Please review before confirming</p>
+            </div>
+            <div class="dialog-body" id="confirmBody"></div>
+            <div class="dialog-foot">
+                <button class="btn btn-ghost" id="cancelSubmitBtn">Go back</button>
+                <button class="btn btn-primary" id="confirmSubmitBtn">Yes, submit</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="blockScreen" class="center-screen" style="display:none;"></div>
+
+    <script>
+        // ── Disable right-click context menu ──
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // ── Disable keyboard shortcuts for copy, print, save, etc. ──
+        document.addEventListener('keydown', function(e) {
+            // Ctrl+C, Ctrl+V, Ctrl+P, Ctrl+S, Ctrl+U, F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
+            if (
+                (e.ctrlKey && (e.key === 'c' || e.key === 'C' || 
+                 e.key === 'v' || e.key === 'V' || 
+                 e.key === 'p' || e.key === 'P' || 
+                 e.key === 's' || e.key === 'S' || 
+                 e.key === 'u' || e.key === 'U' || 
+                 e.key === 'i' || e.key === 'I')) ||
+                (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'i' || 
+                 e.key === 'J' || e.key === 'j' || 
+                 e.key === 'C' || e.key === 'c')) ||
+                e.key === 'F12' ||
+                (e.ctrlKey && e.shiftKey && e.key === 'S' || e.key === 's')
+            ) {
+                e.preventDefault();
+                return false;
+            }
+        });
+
+        // ── Disable text selection on the entire document ──
+        document.addEventListener('selectstart', function(e) {
+            // Allow selection on input fields and buttons
+            if (e.target.tagName === 'INPUT' || 
+                e.target.tagName === 'BUTTON' || 
+                e.target.closest('input') || 
+                e.target.closest('button') ||
+                e.target.closest('.btn') ||
+                e.target.closest('.page-btn') ||
+                e.target.closest('.palette-btn') ||
+                e.target.closest('.flag-btn')) {
+                return;
+            }
+            e.preventDefault();
+        });
+
+        // ── Disable copy events ──
+        document.addEventListener('copy', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // ── Disable cut events ──
+        document.addEventListener('cut', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // ── Disable drag events ──
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // ── Disable paste events ──
+        document.addEventListener('paste', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // ── Detect and block screenshot attempts (desktop browsers) ──
+        document.addEventListener('keyup', function(e) {
+            // Print Screen key (Windows)
+            if (e.key === 'PrintScreen') {
+                e.preventDefault();
+                alert('Screenshot is disabled during the exam.');
+                return false;
+            }
+        });
+
+        // ── Additional protection: blur when window loses focus ──
+        // This makes it harder to screenshot via browser dev tools
+        document.addEventListener('visibilitychange', function() {
+            if (document.hidden) {
+                // Optionally show a warning or pause the exam
+                console.log('Exam window lost focus - potential cheating attempt');
+            }
+        });
+
+        console.log('🔒 Exam protection enabled: Copy, paste, screenshot, and right-click are disabled.');
+    </script>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "firebase-app": "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js",
+                "firebase-firestore": "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "firebase-app";
+        import {
+            getFirestore, doc, getDoc, setDoc, serverTimestamp
+        } from "firebase-firestore";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC1VmwfA08C5hjGSIA6GJAGxq7rt6mlp3E",
+            authDomain: "uniosun-cbt-e1d93.firebaseapp.com",
+            projectId: "uniosun-cbt-e1d93",
+            storageBucket: "uniosun-cbt-e1d93.firebasestorage.app",
+            messagingSenderId: "10024356331",
+            appId: "1:10024356331:web:a81d560a29021a908331ae"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // ── Course configuration ──
+        const COURSE_CONFIG = {
+            STA104_114: { examsCollection: "STA104_114_exams", bank: "./sta104-114.js", total: 60, label: "STA 104/114" },
+            STA220_214: { examsCollection: "STA220_214_exams", bank: "./sta220-214.js", total: 60, label: "STA 220/214" },
+            STA308: { examsCollection: "STA308_exams", bank: "./sta308.js", total: 60, label: "STA 308" },
+            STA304: { examsCollection: "STA304_exams", bank: "./sta304.js", total: 60, label: "STA 304" },
+        };
+
+        const COURSE_LABEL_TO_CODE = {
+            "STA 104/114": "STA104_114",
+            "STA 220/214": "STA220_214",
+            "STA 220/STA 214": "STA220_214",
+            "STA 308": "STA308",
+            "STA 304": "STA304",
+        };
+
+        const DURATION_MINUTES = 30;
+
+        // ── DOM refs ──
+        const loadingScreen = document.getElementById('loadingScreen');
+        const examRoot = document.getElementById('examRoot');
+        const blockScreen = document.getElementById('blockScreen');
+        const whoName = document.getElementById('whoName');
+        const whoMeta = document.getElementById('whoMeta');
+        const timerBox = document.getElementById('timerBox');
+        const paletteScroll = document.getElementById('paletteScroll');
+        const paletteSummary = document.getElementById('paletteSummary');
+        const questionList = document.getElementById('questionList');
+        const submitStatus = document.getElementById('submitStatus');
+        const submitBtn = document.getElementById('submitBtn');
+        const confirmOverlay = document.getElementById('confirmOverlay');
+        const confirmBody = document.getElementById('confirmBody');
+        const cancelSubmitBtn = document.getElementById('cancelSubmitBtn');
+        const confirmSubmitBtn = document.getElementById('confirmSubmitBtn');
+
+        function showBlock(iconSvg, title, message, showButton) {
+            loadingScreen.style.display = 'none';
+            examRoot.style.display = 'none';
+            blockScreen.style.display = 'flex';
+            blockScreen.innerHTML = `
+                <div class="center-card">
+                    <div class="icon">${iconSvg}</div>
+                    <h2>${title}</h2>
+                    <p>${message}</p>
+                    ${showButton ? '<button class="btn btn-primary" onclick="window.location.href=\'dashboard.html\'">Back to dashboard</button>' : ''}
+                </div>`;
+        }
+
+        const ICON_LOCK = `<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>`;
+        const ICON_CHECK = `<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>`;
+        const ICON_WARN = `<svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01M10.3 3.9 2.5 18a1 1 0 0 0 .9 1.5h17.2a1 1 0 0 0 .9-1.5L13.7 3.9a1 1 0 0 0-1.7 0Z"/></svg>`;
+
+        // ── Load student session ──
+        let student;
+        try {
+            student = JSON.parse(sessionStorage.getItem('cbt_student'));
+        } catch { student = null; }
+
+        if (!student || !student.docId) {
+            showBlock(ICON_LOCK, "You're not logged in", "Please log in with your matriculation number before starting the exam.", false);
+            throw new Error('No session');
+        }
+
+        const courseCode = student.courseCode || COURSE_LABEL_TO_CODE[student.course];
+        const config = courseCode ? COURSE_CONFIG[courseCode] : null;
+
+        if (!config) {
+            showBlock(ICON_WARN, "Course not recognized", "We couldn't determine which exam to load for your account. Please log in again from the correct course page.", false);
+            throw new Error('Unknown course');
+        }
+
+        const whoCourse = document.getElementById('whoCourse');
+        whoCourse.textContent = config.label;
+        whoName.textContent = `${student.name} ${student.matric}`;
+        whoMeta.innerHTML = `<span>${student.department || ''}</span><span>${student.level || ''} Level</span>`;
+
+        const examRef = doc(db, config.examsCollection, student.docId);
+
+        // ── Helpers ──
+        function shuffleArray(arr) {
+            const a = arr.slice();
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        function sampleIndices(n, k) {
+            const idx = shuffleArray(Array.from({ length: n }, (_, i) => i));
+            return idx.slice(0, Math.min(k, n));
+        }
+
+        function shuffleOptions(options, correctIdx) {
+            const order = shuffleArray([0, 1, 2, 3]);
+            const newOptions = order.map(i => options[i]);
+            const newCorrect = order.indexOf(correctIdx);
+            return { options: newOptions, correct: newCorrect };
+        }
+
+        // ── State ──
+        let questionSet = [];
+        let answers = {};
+        let flagged = {};
+        let startedAtMillis = null;
+        let saveTimer = null;
+        let submitted = false;
+        let timerInterval = null;
+        let currentPage = 0;
+        const PAGE_SIZE = 10;
+
+        async function init() {
+            let examSnap;
+            try {
+                examSnap = await getDoc(examRef);
+            } catch (err) {
+                showBlock(ICON_WARN, "Couldn't reach the exam server", "Please check your connection and reload this page.", false);
+                return;
+            }
+
+            const data = examSnap.exists() ? examSnap.data() : { status: 'not_taken' };
+
+            if (data.status === 'submitted') {
+                submitted = true;
+                showBlock(ICON_CHECK, "You've already submitted this exam", data.score !== undefined
+                    ? `Your examination attempt has been recorded. Please note that only one attempt is allowed per student.`
+                    : `Only one attempt is allowed per student.`, true);
+                return;
+            }
+
+            if (data.status === 'in_progress' && Array.isArray(data.questionSet) && data.questionSet.length) {
+                questionSet = data.questionSet;
+                answers = data.answers || {};
+                startedAtMillis = data.startedAt ? data.startedAt.toMillis() : Date.now();
+            } else {
+                // Load the question bank from the local file
+                let bankModule;
+                try {
+                    bankModule = await import(config.bank);
+                } catch (err) {
+                    console.error('Failed to load question bank:', err);
+                    showBlock(ICON_WARN, "Couldn't load exam questions", 
+                        `The question bank for your course (${config.bank}) couldn't be loaded. Please contact your course lecturer.`, false);
+                    return;
+                }
+
+                const pool = bankModule.questions;
+                if (!pool || !Array.isArray(pool) || pool.length === 0) {
+                    showBlock(ICON_WARN, "Question bank is empty", 
+                        "The question bank for your course appears to be empty. Please contact your course lecturer.", false);
+                    return;
+                }
+
+                const chosenIdx = sampleIndices(pool.length, config.total);
+                questionSet = chosenIdx.map(i => {
+                    const src = pool[i];
+                    const shuffled = shuffleOptions(src.options, src.correct);
+                    return { q: src.q, options: shuffled.options, correct: shuffled.correct };
+                });
+                answers = {};
+
+                try {
+                    await setDoc(examRef, {
+                        status: 'in_progress',
+                        durationMinutes: DURATION_MINUTES,
+                        totalQuestions: questionSet.length,
+                        questionSet,
+                        answers: {},
+                        startedAt: serverTimestamp(),
+                    }, { merge: true });
+
+                    const freshSnap = await getDoc(examRef);
+                    const freshData = freshSnap.data();
+                    startedAtMillis = freshData.startedAt ? freshData.startedAt.toMillis() : Date.now();
+                } catch (err) {
+                    showBlock(ICON_WARN, "Couldn't start the exam", "Please check your connection and reload this page. Your exam has not been started yet.", false);
+                    return;
+                }
+            }
+
+            renderExam();
+            startTimer();
+            loadingScreen.style.display = 'none';
+            examRoot.style.display = 'block';
+        }
+
+        function totalPages() {
+            return Math.ceil(questionSet.length / PAGE_SIZE);
+        }
+
+        function renderExam() {
+            renderPalette();
+            renderQuestionsPage();
+        }
+
+        function renderPalette() {
+            paletteScroll.innerHTML = questionSet.map((_, i) => `
+                <button class="palette-btn ${answers[i] !== undefined ? 'answered' : ''} ${flagged[i] ? 'flagged' : ''}" data-goto="${i}">${i + 1}</button>
+            `).join('');
+
+            paletteScroll.querySelectorAll('.palette-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const i = parseInt(btn.dataset.goto, 10);
+                    const targetPage = Math.floor(i / PAGE_SIZE);
+                    if (targetPage !== currentPage) {
+                        currentPage = targetPage;
+                        renderQuestionsPage();
+                    }
+                    requestAnimationFrame(() => {
+                        const el = document.getElementById(`q-${i}`);
+                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    });
+                });
+            });
+
+            updateSummary();
+        }
+
+        function renderQuestionsPage() {
+            const start = currentPage * PAGE_SIZE;
+            const end = Math.min(start + PAGE_SIZE, questionSet.length);
+            const pages = totalPages();
+
+            const cardsHtml = questionSet.slice(start, end).map((item, offset) => {
+                const i = start + offset;
+                return `
+                <div class="q-card ${flagged[i] ? 'flagged' : ''}" id="q-${i}" data-qindex="${i}">
+                    <div class="q-head">
+                        <button type="button" class="flag-btn ${flagged[i] ? 'flagged' : ''}" data-flag="${i}" title="Flag for review" aria-label="Flag question ${i + 1} for review">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V4a1 1 0 0 1 1-1h13.5a.5.5 0 0 1 .4.8l-3.2 4.2a1 1 0 0 0 0 1.2l3.2 4.2a.5.5 0 0 1-.4.8H6a1 1 0 0 0-1 1v5"/></svg>
+                        </button>
+                        <div class="q-num">${i + 1}</div>
+                        <div class="q-text">${escapeHtml(item.q)}</div>
+                    </div>
+                    <div class="opt-list">
+                        ${item.options.map((opt, oi) => `
+                            <label class="opt-btn">
+                                <input type="radio" name="q-${i}" value="${oi}" data-qindex="${i}" data-oindex="${oi}" ${answers[i] === oi ? 'checked' : ''}>
+                                <span class="tag">${String.fromCharCode(65 + oi)}</span>
+                                <span class="opt-text">${escapeHtml(opt)}</span>
+                            </label>
+                        `).join('')}
+                    </div>
+                </div>`;
+            }).join('');
+
+            const topInfoHtml = `
+                <div class="pagination-info-bar">
+                    <span>Page ${currentPage + 1} of ${pages} &nbsp;(Questions ${start + 1}&ndash;${end})</span>
+                </div>`;
+
+            const bottomPaginationHtml = `
+                <div class="pagination-bar">
+                    <button class="page-btn prev-page-btn" ${currentPage === 0 ? 'disabled' : ''}>Previous</button>
+                    <span>Page ${currentPage + 1} of ${pages} &nbsp;(Questions ${start + 1}&ndash;${end})</span>
+                    <button class="page-btn next-page-btn" ${currentPage >= pages - 1 ? 'disabled' : ''}>Next</button>
+                </div>`;
+
+            questionList.innerHTML = topInfoHtml + cardsHtml + bottomPaginationHtml;
+
+            questionList.querySelectorAll('.prev-page-btn').forEach(btn => btn.addEventListener('click', () => {
+                if (currentPage > 0) { currentPage--; renderQuestionsPage(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+            }));
+            questionList.querySelectorAll('.next-page-btn').forEach(btn => btn.addEventListener('click', () => {
+                if (currentPage < pages - 1) { currentPage++; renderQuestionsPage(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+            }));
+
+            questionList.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', () => {
+                    const qi = parseInt(radio.dataset.qindex, 10);
+                    const oi = parseInt(radio.dataset.oindex, 10);
+                    answers[qi] = oi;
+                    if (flagged[qi]) delete flagged[qi];
+                    refreshQuestionUI(qi);
+                    scheduleSave();
+                });
+            });
+
+            questionList.querySelectorAll('.flag-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const qi = parseInt(btn.dataset.flag, 10);
+                    if (flagged[qi]) {
+                        delete flagged[qi];
+                    } else {
+                        flagged[qi] = true;
+                        if (answers[qi] !== undefined) {
+                            delete answers[qi];
+                            const card = document.getElementById(`q-${qi}`);
+                            card.querySelectorAll('input[type="radio"]').forEach(r => r.checked = false);
+                            scheduleSave();
+                        }
+                    }
+                    refreshQuestionUI(qi);
+                });
+            });
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        function refreshQuestionUI(qi) {
+            const card = document.getElementById(`q-${qi}`);
+            if (!card) return;
+            card.querySelectorAll('.opt-btn').forEach(label => {
+                const radio = label.querySelector('input[type="radio"]');
+                const oi = parseInt(radio.dataset.oindex, 10);
+                radio.checked = answers[qi] === oi;
+            });
+            card.classList.toggle('flagged', !!flagged[qi]);
+            const flagBtn = card.querySelector('.flag-btn');
+            if (flagBtn) flagBtn.classList.toggle('flagged', !!flagged[qi]);
+            const paletteBtn = paletteScroll.querySelector(`[data-goto="${qi}"]`);
+            if (paletteBtn) {
+                paletteBtn.classList.toggle('answered', answers[qi] !== undefined);
+                paletteBtn.classList.toggle('flagged', !!flagged[qi]);
+            }
+            updateSummary();
+        }
+
+        function updateSummary() {
+            const answeredCount = Object.keys(answers).length;
+            const total = questionSet.length;
+            paletteSummary.textContent = `${answeredCount} of ${total} answered`;
+            submitStatus.textContent = `${total - answeredCount} unanswered`;
+        }
+
+        function scheduleSave() {
+            if (saveTimer) clearTimeout(saveTimer);
+            saveTimer = setTimeout(async () => {
+                try {
+                    await setDoc(examRef, { answers }, { merge: true });
+                } catch (err) {
+                    console.error('Autosave failed:', err);
+                }
+            }, 900);
+        }
+
+        // ── Timer ──
+        function startTimer() {
+            const totalSeconds = DURATION_MINUTES * 60;
+
+            function tick() {
+                const elapsed = Math.floor((Date.now() - startedAtMillis) / 1000);
+                const remaining = totalSeconds - elapsed;
+
+                if (remaining <= 0) {
+                    clearInterval(timerInterval);
+                    timerBox.textContent = '00:00';
+                    finalizeSubmit(true);
+                    return;
+                }
+
+                const mm = Math.floor(remaining / 60).toString().padStart(2, '0');
+                const ss = (remaining % 60).toString().padStart(2, '0');
+                timerBox.textContent = `${mm}:${ss}`;
+
+                timerBox.classList.toggle('warn', remaining <= 300 && remaining > 60);
+                timerBox.classList.toggle('danger', remaining <= 60);
+            }
+
+            tick();
+            timerInterval = setInterval(tick, 1000);
+        }
+
+        // ── Submit flow ──
+        submitBtn.addEventListener('click', () => {
+            const total = questionSet.length;
+            const answeredCount = Object.keys(answers).length;
+            const unanswered = total - answeredCount;
+
+            confirmBody.innerHTML = unanswered > 0
+                ? `You have <b>${unanswered}</b> unanswered question${unanswered === 1 ? '' : 's'} out of ${total}. Once submitted, you cannot change your answers or re-attempt the exam.`
+                : `You've answered all ${total} questions. Once submitted, you cannot change your answers or re-attempt the exam.`;
+
+            confirmOverlay.classList.add('show');
+        });
+
+        cancelSubmitBtn.addEventListener('click', () => confirmOverlay.classList.remove('show'));
+        confirmOverlay.addEventListener('click', (e) => { if (e.target === confirmOverlay) confirmOverlay.classList.remove('show'); });
+        confirmSubmitBtn.addEventListener('click', () => {
+            confirmOverlay.classList.remove('show');
+            finalizeSubmit(false);
+        });
+
+        async function finalizeSubmit(isAutoSubmit) {
+            if (submitted) return;
+            submitted = true;
+            clearInterval(timerInterval);
+            if (saveTimer) clearTimeout(saveTimer);
+
+            let correctCount = 0;
+            questionSet.forEach((item, i) => {
+                if (answers[i] === item.correct) correctCount++;
+            });
+            const score = Math.round(correctCount * 0.5 * 10) / 10;
+
+            try {
+                await setDoc(examRef, {
+                    status: 'submitted',
+                    answers,
+                    score,
+                    correctCount,
+                    totalQuestions: questionSet.length,
+                    submittedAt: serverTimestamp(),
+                }, { merge: true });
+            } catch (err) {
+                console.error('Final submit failed, retrying once:', err);
+                try {
+                    await setDoc(examRef, { status: 'submitted', answers, score, correctCount, submittedAt: serverTimestamp() }, { merge: true });
+                } catch (err2) {
+                    showBlock(ICON_WARN, "Submission may not have saved", "We couldn't confirm your submission reached the server. Please reload this page — if it still shows the exam, contact your course lecturer immediately with a screenshot.", false);
+                    return;
+                }
+            }
+
+            loadingScreen.style.display = 'none';
+            examRoot.style.display = 'none';
+            blockScreen.style.display = 'flex';
+            blockScreen.innerHTML = `
+                <div class="center-card">
+                    <div class="icon">${ICON_CHECK}</div>
+                    <h2>${isAutoSubmit ? 'Time is up - exam submitted' : 'Exam submitted'}</h2>
+                    <p>Your responses for ${config.label} have been recorded. Only one attempt is allowed per student.</p>
+                    <button class="btn btn-primary" onclick="window.location.href='dashboard.html'">Back to dashboard</button>
+                </div>`;
+        }
+
+        // Warn before leaving mid-exam
+        window.addEventListener('beforeunload', (e) => {
+            if (!submitted && questionSet.length) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+
+        init();
+    </script>
+</body>
+
+</html>

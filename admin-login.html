@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Administrator Login | OSUN STATE UNIVERSITY, OSOGBO, NIGERIA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --emerald-900: #0b3a2c;
+            --emerald-700: #12583f;
+            --emerald-600: #187b58;
+            --emerald-50: #eaf3ef;
+            --gold: #d9a441;
+            --gold-light: #ecc276;
+            --blue: #3b6ea5;
+            --red: #b3452c;
+            --red-50: #fbeeea;
+            --ink: #16211c;
+            --muted: #6b7a72;
+            --bg: #f5f7f6;
+            --line: #e5eae7;
+            --white: #ffffff;
+        }
+
+        html,
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            min-height: 100vh;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Sora', sans-serif;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        /* ─── NAVBAR ─────────────────────────────── */
+        header {
+            background: var(--white);
+            border-bottom: 1px solid var(--line);
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+        .header-inner {
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand img {
+            width: 38px;
+            height: 38px;
+            object-fit: contain;
+        }
+
+        .brand-text h1 {
+            font-size: 13.5px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .brand-text p {
+            font-size: 11px;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--emerald-700);
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 20px;
+            background: var(--emerald-50);
+            transition: background .15s;
+        }
+
+        .back-link:hover {
+            background: #dcece4;
+        }
+
+        /* ─── PAGE BANNER ────────────────────────── */
+        .banner {
+            position: relative;
+            background: radial-gradient(120% 180% at 12% 0%, var(--emerald-600) 0%, var(--emerald-700) 45%, var(--emerald-900) 100%);
+            color: var(--white);
+            overflow: hidden;
+        }
+
+        .banner::before {
+            content: '';
+            position: absolute;
+            width: 340px;
+            height: 340px;
+            border-radius: 50%;
+            background: rgba(217, 164, 65, .14);
+            top: -140px;
+            right: -60px;
+        }
+
+        .banner-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 18px 24px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 22px;
+            flex-wrap: wrap;
+        }
+
+        .banner h2 {
+            font-size: clamp(17px, 2.4vw, 22px);
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .banner .sub {
+            font-size: 12.5px;
+            color: rgba(255, 255, 255, .82);
+            font-weight: 500;
+        }
+
+        /* ─── MAIN CONTENT ───────────────────────── */
+        main {
+            flex: 1;
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 44px 24px 60px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* ─── LOGIN CARD ─────────────────────────── */
+        .login-wrap {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-card {
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            box-shadow: 0 14px 34px rgba(11, 58, 44, .08);
+            overflow: hidden;
+        }
+
+        .login-head {
+            padding: 22px 24px 18px;
+            background: var(--emerald-900);
+            color: var(--white);
+        }
+
+        .login-head .code-pill {
+            display: inline-block;
+            font-family: 'Sora', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--emerald-900);
+            background: var(--gold-light);
+            padding: 4px 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .login-head h3 {
+            font-size: 15.5px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 4px;
+        }
+
+        .login-head p {
+            font-size: 11.5px;
+            color: rgba(255, 255, 255, .7);
+        }
+
+        .login-body {
+            padding: 22px 24px 24px;
+        }
+
+        .field {
+            margin-bottom: 16px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 6px;
+        }
+
+        .field input {
+            width: 100%;
+            padding: 11px 13px;
+            border: 1.5px solid var(--line);
+            border-radius: 9px;
+            font-size: 13.5px;
+            font-family: 'Inter', sans-serif;
+            color: var(--ink);
+            background: var(--bg);
+            transition: border-color .15s, background .15s;
+        }
+
+        .field input::placeholder {
+            color: #a7b3ac;
+        }
+
+        .field input:focus {
+            outline: none;
+            border-color: var(--emerald-600);
+            background: var(--white);
+        }
+
+        .password-wrap {
+            position: relative;
+        }
+
+        .password-wrap input {
+            padding-right: 42px;
+        }
+
+        .toggle-pw {
+            position: absolute;
+            right: 4px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 7px;
+            transition: color .15s, background .15s;
+        }
+
+        .toggle-pw:hover {
+            color: var(--emerald-700);
+            background: var(--emerald-50);
+        }
+
+        .toggle-pw:focus-visible {
+            outline: 3px solid var(--blue);
+            outline-offset: 2px;
+        }
+
+        .toggle-pw svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .start-btn {
+            width: 100%;
+            background: var(--emerald-700);
+            color: var(--white);
+            border: none;
+            padding: 13px 0;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background .15s, transform .15s, opacity .15s;
+        }
+
+        .start-btn:hover:not(:disabled) {
+            background: var(--emerald-600);
+            transform: translateY(-1px);
+        }
+
+        .start-btn:disabled {
+            background: #b9c4bd;
+            cursor: not-allowed;
+        }
+
+        .start-btn:focus-visible {
+            outline: 3px solid var(--blue);
+            outline-offset: 2px;
+        }
+
+        .start-btn svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        .form-msg {
+            margin-top: 12px;
+            font-size: 11.5px;
+            border-radius: 9px;
+            padding: 10px 12px;
+            display: none;
+            line-height: 1.5;
+        }
+
+        .form-msg.show {
+            display: block;
+        }
+
+        .form-msg.error {
+            background: var(--red-50);
+            color: var(--red);
+            border: 1px solid #efd3ca;
+        }
+
+        .form-msg.info {
+            background: var(--emerald-50);
+            color: var(--emerald-900);
+            border: 1px solid #d7e8e0;
+        }
+
+        .security-note {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-top: 16px;
+            font-size: 11px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .security-note svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+            margin-top: 1px;
+            color: var(--gold);
+        }
+
+        /* ─── FOOTER ─────────────────────────────── */
+        footer {
+            background: var(--white);
+            border-top: 1px solid var(--line);
+            text-align: center;
+            padding: 16px 20px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        footer a {
+            color: var(--emerald-700);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ─── RESPONSIVE ─────────────────────────── */
+        @media (max-width: 600px) {
+            .banner-inner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+                padding: 20px 20px 22px;
+            }
+
+            main {
+                padding: 30px 16px 44px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .start-btn,
+            .back-link {
+                transition: none;
+            }
+        }
+
+        .spinner {
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(255, 255, 255, .4);
+            border-top-color: var(--white);
+            border-radius: 50%;
+            animation: spin .7s linear infinite;
+            display: none;
+        }
+
+        .start-btn.loading .spinner {
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-inner">
+            <div class="brand">
+                <img src="3080.png" alt="Osun State University crest">
+                <div class="brand-text">
+                    <h1>Osun State University, Osogbo</h1>
+                    <p>College of Science, Engineering &amp; Technology</p>
+                </div>
+            </div>
+            <a href="index.html" class="back-link">Back to home page</a>
+        </div>
+    </header>
+
+    <section class="banner">
+        <div class="banner-inner">
+            <div>
+                <h2>Administrator Login</h2>
+                <p class="sub">Department of Statistics &nbsp;&middot;&nbsp; CBT Portal Management</p>
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <div class="login-wrap">
+            <div class="login-card">
+                <div class="login-head">
+                     <h3>Administrator Login</h3>
+                    <p>Authorized personnel only.</p>
+                </div>
+                <div class="login-body">
+                    <form id="loginForm" novalidate>
+                        <div class="field">
+                            <label for="username">Username</label>
+                            <input type="text" id="username" name="username" autocomplete="off" required>
+                        </div>
+                        <div class="field">
+                            <label for="password">Password</label>
+                            <div class="password-wrap">
+                                <input type="password" id="password" name="password" autocomplete="off" required>
+                                <button type="button" class="toggle-pw" id="togglePw" aria-label="Show password">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" id="eyeIcon">
+                                        <path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z" />
+                                        <circle cx="12" cy="12" r="3" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="start-btn" id="startBtn">
+                            <span class="spinner"></span>
+                            <span id="startBtnLabel">Login</span>
+                        </button>
+                        <div class="form-msg" id="formMsg"></div>
+                    </form>
+                    <div class="security-note">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        </svg>
+                        This portal is restricted to the course lecturer and authorized administrators only.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Course Lecturer for 2nd Semester of 2025/2026 Academic Session: Dr. Timothy A. Ogunleye
+            &nbsp;|&nbsp; <a href="https://timothy-ogunleye.vercel.app/" target="_blank">Lecturer Profile</a></p>
+    </footer>
+
+    <script>
+        // ─── LOCAL-ONLY ADMIN CREDENTIAL CHECK ─────────────────────────────
+        // NOTE: this is a client-side check only. Anyone who views this file's
+        // source can see the credential below, so it should not be relied on
+        // to protect anything sensitive. For real protection, verify the admin
+        // on a server (e.g. Firebase custom claims / a backend endpoint) rather
+        // than in the browser.
+        const ADMIN_USERNAME = "OGUNLEYE";
+        const ADMIN_PASSWORD = "Rconsortium_2024";
+
+        const form = document.getElementById('loginForm');
+        const usernameInput = document.getElementById('username');
+        const passwordInput = document.getElementById('password');
+        const msg = document.getElementById('formMsg');
+        const startBtn = document.getElementById('startBtn');
+        const startBtnLabel = document.getElementById('startBtnLabel');
+
+        function showMsg(text, type) {
+            msg.textContent = text;
+            msg.classList.remove('show', 'error', 'info');
+            msg.classList.add('show', type);
+        }
+
+        function setLoading(isLoading, label) {
+            startBtn.disabled = isLoading;
+            startBtn.classList.toggle('loading', isLoading);
+            startBtnLabel.textContent = label;
+        }
+
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            msg.classList.remove('show', 'error', 'info');
+
+            const user = usernameInput.value.trim();
+            const pass = passwordInput.value;
+
+            if (!user || !pass) {
+                showMsg('Please enter both username and password.', 'error');
+                return;
+            }
+
+            setLoading(true, 'Verifying…');
+
+            setTimeout(() => {
+                if (user === ADMIN_USERNAME && pass === ADMIN_PASSWORD) {
+                    sessionStorage.setItem('cbt_admin', JSON.stringify({
+                        username: user,
+                        loggedInAt: Date.now()
+                    }));
+                    setLoading(true, 'Verified! Redirecting…');
+                    showMsg('Login successful. Redirecting…', 'info');
+                    setTimeout(() => {
+                        window.location.href = 'admin-dashboard.html';
+                    }, 500);
+                } else {
+                    setLoading(false, 'Login');
+                    showMsg('Incorrect username or password.', 'error');
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                }
+            }, 400);
+        });
+
+        usernameInput.addEventListener('input', () => msg.classList.remove('show', 'error', 'info'));
+        passwordInput.addEventListener('input', () => msg.classList.remove('show', 'error', 'info'));
+
+        // ─── SHOW/HIDE PASSWORD TOGGLE ──────────────────────────────────
+        const togglePw = document.getElementById('togglePw');
+        const eyeIcon = document.getElementById('eyeIcon');
+
+        const EYE_OPEN = '<path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/>';
+        const EYE_OFF = '<path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a20.4 20.4 0 0 1 5.06-6.06M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 8 11 8a20.4 20.4 0 0 1-3.22 4.53M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/>';
+
+        togglePw.addEventListener('click', () => {
+            const isHidden = passwordInput.type === 'password';
+            passwordInput.type = isHidden ? 'text' : 'password';
+            eyeIcon.innerHTML = isHidden ? EYE_OFF : EYE_OPEN;
+            togglePw.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
+        });
+
+        usernameInput.focus();
+    </script>
+
+</body>
+
+</html>

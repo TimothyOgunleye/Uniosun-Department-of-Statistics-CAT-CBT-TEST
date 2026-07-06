@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard &ndash; STA 104/114 | OSUN STATE UNIVERSITY, OSOGBO, NIGERIA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --emerald-900: #0b3a2c;
+            --emerald-700: #12583f;
+            --emerald-600: #187b58;
+            --emerald-50: #eaf3ef;
+            --gold: #d9a441;
+            --gold-light: #ecc276;
+            --blue: #3b6ea5;
+            --red: #b3452c;
+            --red-50: #fbeeea;
+            --ink: #16211c;
+            --muted: #6b7a72;
+            --bg: #f5f7f6;
+            --line: #e5eae7;
+            --white: #ffffff;
+        }
+
+        html,
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            min-height: 100vh;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Sora', sans-serif;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        /* ─── NAVBAR ─────────────────────────────── */
+        header {
+            background: var(--white);
+            border-bottom: 1px solid var(--line);
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+        .header-inner {
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand img {
+            width: 38px;
+            height: 38px;
+            object-fit: contain;
+        }
+
+        .brand-text h1 {
+            font-size: 13.5px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .brand-text p {
+            font-size: 11px;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .logout-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--red);
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 20px;
+            background: var(--red-50);
+            border: none;
+            cursor: pointer;
+            transition: background .15s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .logout-link:hover {
+            background: #f5e0d7;
+        }
+
+        /* ─── BANNER ─────────────────────────────── */
+        .banner {
+            position: relative;
+            background: radial-gradient(120% 180% at 12% 0%, var(--emerald-600) 0%, var(--emerald-700) 45%, var(--emerald-900) 100%);
+            color: var(--white);
+            overflow: hidden;
+        }
+
+        .banner::before {
+            content: '';
+            position: absolute;
+            width: 340px;
+            height: 340px;
+            border-radius: 50%;
+            background: rgba(217, 164, 65, .14);
+            top: -140px;
+            right: -60px;
+        }
+
+        .banner-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 18px 24px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 22px;
+            flex-wrap: wrap;
+        }
+
+        .banner-text .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .4px;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            margin-bottom: 6px;
+        }
+
+        .banner h2 {
+            font-size: clamp(18px, 2.6vw, 23px);
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .banner .sub {
+            font-size: 13px;
+            color: rgba(255, 255, 255, .82);
+            font-weight: 500;
+        }
+
+        /* ─── MAIN ───────────────────────────────── */
+        main {
+            flex: 1;
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 34px 24px 60px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 26px;
+            align-items: start;
+        }
+
+        .card {
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(11, 58, 44, .04);
+            overflow: hidden;
+        }
+
+        .card-head {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-head .dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--gold);
+            flex-shrink: 0;
+        }
+
+        .card-head h3 {
+            font-size: 15.5px;
+            font-weight: 700;
+        }
+
+        .card-body {
+            padding: 22px 24px 24px;
+        }
+
+        /* Profile card */
+        .profile-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            padding: 13px 0;
+            border-bottom: 1px solid var(--line);
+            gap: 12px;
+        }
+
+        .profile-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .profile-row .label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .3px;
+            flex-shrink: 0;
+        }
+
+        .profile-row .value {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--ink);
+            text-align: right;
+        }
+
+        .level-pill {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--emerald-900);
+            background: var(--gold-light);
+            padding: 3px 10px;
+            border-radius: 8px;
+        }
+
+        /* Exam status card */
+        .status-banner {
+            border-radius: 12px;
+            padding: 18px;
+            margin-bottom: 18px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .status-banner.pending {
+            background: var(--emerald-50);
+            border: 1px solid #d7e8e0;
+        }
+
+        .status-banner.done {
+            background: var(--red-50);
+            border: 1px solid #efd3ca;
+        }
+
+        .status-banner svg {
+            width: 22px;
+            height: 22px;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .status-banner.pending svg {
+            color: var(--emerald-700);
+        }
+
+        .status-banner.done svg {
+            color: var(--red);
+        }
+
+        .status-banner h4 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .status-banner.pending h4 {
+            color: var(--emerald-900);
+        }
+
+        .status-banner.done h4 {
+            color: var(--red);
+        }
+
+        .status-banner p {
+            font-size: 12.5px;
+            color: var(--muted);
+            line-height: 1.55;
+        }
+
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--line);
+            font-size: 13px;
+        }
+
+        .result-row:last-child {
+            border-bottom: none;
+        }
+
+        .result-row .label {
+            color: var(--muted);
+            font-weight: 600;
+        }
+
+        .result-row .value {
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        .start-btn {
+            width: 100%;
+            background: var(--emerald-700);
+            color: var(--white);
+            border: none;
+            padding: 13px 0;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 6px;
+            transition: background .15s, transform .15s;
+        }
+
+        .start-btn:hover {
+            background: var(--emerald-600);
+            transform: translateY(-1px);
+        }
+
+        .start-btn:focus-visible {
+            outline: 3px solid var(--blue);
+            outline-offset: 2px;
+        }
+
+        .loading-state,
+        .error-state {
+            text-align: center;
+            padding: 40px 24px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .error-state a {
+            color: var(--emerald-700);
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .error-state a:hover {
+            text-decoration: underline;
+        }
+
+        /* ─── FOOTER ─────────────────────────────── */
+        footer {
+            background: var(--white);
+            border-top: 1px solid var(--line);
+            text-align: center;
+            padding: 16px 20px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        footer a {
+            color: var(--emerald-700);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ─── RESPONSIVE ─────────────────────────── */
+        @media (max-width: 880px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .banner-inner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+                padding: 16px 20px 18px;
+            }
+
+            main {
+                padding: 26px 16px 44px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-inner">
+            <div class="brand">
+                <img src="3080.png" alt="Osun State University crest">
+                <div class="brand-text">
+                    <h1>Osun State University, Osogbo</h1>
+                    <p>College of Science, Engineering &amp; Technology</p>
+                </div>
+            </div>
+            <button class="logout-link" id="logoutBtn">Log out</button>
+        </div>
+    </header>
+
+    <section class="banner">
+        <div class="banner-inner">
+            <div class="banner-text">
+                <span class="eyebrow">Student Dashboard</span>
+                <h2 id="courseTitle">&nbsp;</h2>
+                <p class="sub" id="courseSub">&nbsp;</p>
+            </div>
+        </div>
+    </section>
+
+    <main id="mainContent">
+        <div class="loading-state" style="grid-column: 1 / -1;" id="loadingState">Loading your dashboard…</div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Course Lecturer for 2nd Semester of 2025/2026 Academic Session: Dr. Timothy A. Ogunleye
+            &nbsp;|&nbsp; <a href="https://timothy-ogunleye.vercel.app/" target="_blank">Lecturer Profile</a></p>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC1VmwfA08C5hjGSIA6GJAGxq7rt6mlp3E",
+            authDomain: "uniosun-cbt-e1d93.firebaseapp.com",
+            projectId: "uniosun-cbt-e1d93",
+            storageBucket: "uniosun-cbt-e1d93.firebasestorage.app",
+            messagingSenderId: "10024356331",
+            appId: "1:10024356331:web:a81d560a29021a908331ae"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // ── Course configuration ──
+        // One entry per course offered. `title` and `department` are shown in the
+        // banner — edit these to match each course's real title/department.
+        // The correct entry is picked using the STUDENT'S OWN course/courseCode
+        // from their session/DB record, so the dashboard always matches the
+        // course the student is actually enrolled in (never hardcoded).
+        const COURSE_CONFIG = {
+            STA104_114: {
+                label: "STA 104/114",
+                title: "Statistical Computing I",
+                unit: "2 Units",
+                department: "Statistics, Mathematics and Geology",
+                studentsCollection: "STA104_114_students",
+                examsCollection: "STA104_114_exams",
+            },
+            STA220_214: {
+                label: "STA 220/214",
+                title: "Introduction to Statistical Packages IV / Statistical Computing II",
+                unit: "2 Units",
+                department: "Statistics, Mathematics and Geology",
+                studentsCollection: "STA220_214_students",
+                examsCollection: "STA220_214_exams",
+            },
+            STA308: {
+                label: "STA 308",
+                title: "Laboratory Fieldwork for Survey Methods and Sampling Theory",
+                unit: "2 Units",
+                department: "Statistics, Mathematics and Geology",
+                studentsCollection: "STA308_students",
+                examsCollection: "STA308_exams",
+            },
+            STA304: {
+                label: "STA 304",
+                title: "Statistical Computing III",
+                unit: "2 Units",
+                department: "Statistics, Mathematics and Geology",
+                studentsCollection: "STA304_students",
+                examsCollection: "STA304_exams",
+            },
+        };
+
+        // Fallback mapping in case a login page only stored `course` (display
+        // label) and not `courseCode`.
+        const COURSE_LABEL_TO_CODE = {
+            "STA 104/114": "STA104_114",
+            "STA 220/214": "STA220_214",
+            "STA 220/STA 214": "STA220_214",
+            "STA 308": "STA308",
+            "STA 304": "STA304",
+        };
+
+        const mainEl = document.getElementById('mainContent');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const courseTitleEl = document.getElementById('courseTitle');
+        const courseSubEl = document.getElementById('courseSub');
+
+        logoutBtn.addEventListener('click', () => {
+            sessionStorage.removeItem('cbt_student');
+            window.location.href = 'index.html';
+        });
+
+        function renderError(message) {
+            mainEl.innerHTML = `
+                <div class="error-state" style="grid-column: 1 / -1;">
+                    <p>${message}</p>
+                    <p style="margin-top:10px;"><a href="index.html">Return to login</a></p>
+                </div>`;
+        }
+
+        function formatTimestamp(ts) {
+            if (!ts) return '—';
+            try {
+                const d = ts.toDate ? ts.toDate() : new Date(ts);
+                return d.toLocaleString('en-GB', {
+                    day: '2-digit', month: 'short', year: 'numeric',
+                    hour: '2-digit', minute: '2-digit'
+                });
+            } catch {
+                return '—';
+            }
+        }
+
+        function renderDashboard(student, exam) {
+            const taken = exam.status && exam.status !== 'not_taken';
+
+            const statusBlock = taken ? `
+                <div class="status-banner done">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 6 9 17l-5-5"/>
+                    </svg>
+                    <div>
+                        <h4>${exam.status === 'submitted' ? 'Exam already submitted' : 'Exam in progress'}</h4>
+                        <p>You have already used your one attempt for this Mid-Semester Examination. A second attempt cannot be granted.</p>
+                    </div>
+                </div>
+                <div class="result-row"><span class="label">Status</span><span class="value">${exam.status === 'submitted' ? 'Submitted' : 'In progress'}</span></div>
+                <div class="result-row"><span class="label">Started</span><span class="value">${formatTimestamp(exam.startedAt)}</span></div>
+                <div class="result-row"><span class="label">Submitted</span><span class="value">${formatTimestamp(exam.submittedAt)}</span></div>
+            ` : `
+                <div class="status-banner pending">
+                  
+                    <div>
+                        <h4>Exam not yet taken</h4>
+                        <p>You have one attempt available. The 30-minute timer starts the moment you click Start Test and cannot be paused.</p>
+                    </div>
+                </div>
+                <button class="start-btn" id="startTestBtn">Start Test</button>
+            `;
+
+            mainEl.innerHTML = `
+                <div class="card">
+                    <div class="card-head"><span class="dot"></span><h3>Student profile</h3></div>
+                    <div class="card-body">
+                        <div class="profile-row"><span class="label">Full name</span><span class="value">${student.name}</span></div>
+                        <div class="profile-row"><span class="label">Matric number</span><span class="value">${student.matric}</span></div>
+                        <div class="profile-row"><span class="label">Department</span><span class="value">${student.department}</span></div>
+                        <div class="profile-row"><span class="label">Level</span><span class="value"><span class="level-pill">${student.level} Level</span></span></div>
+                        <div class="profile-row"><span class="label">Course</span><span class="value">${student.course}</span></div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-head"><span class="dot"></span><h3>Examination status</h3></div>
+                    <div class="card-body">
+                        ${statusBlock}
+                    </div>
+                </div>`;
+
+            const startTestBtn = document.getElementById('startTestBtn');
+            if (startTestBtn) {
+                startTestBtn.addEventListener('click', () => {
+                    window.location.href = 'exam.html';
+                });
+            }
+        }
+
+        async function init() {
+            const raw = sessionStorage.getItem('cbt_student');
+            if (!raw) {
+                renderError('No active session found. Please log in with your matriculation number.');
+                return;
+            }
+
+            let student;
+            try {
+                student = JSON.parse(raw);
+            } catch {
+                renderError('Your session data is invalid. Please log in again.');
+                return;
+            }
+
+            const courseCode = student.courseCode || COURSE_LABEL_TO_CODE[student.course];
+            const config = courseCode ? COURSE_CONFIG[courseCode] : null;
+
+            if (!config) {
+                renderError('We could not determine your course from your account. Please log in again from the correct course page.');
+                return;
+            }
+
+            try {
+                const [studentSnap, examSnap] = await Promise.all([
+                    getDoc(doc(db, config.studentsCollection, student.docId)),
+                    getDoc(doc(db, config.examsCollection, student.docId))
+                ]);
+
+                const studentData = studentSnap.exists() ? { ...student, ...studentSnap.data() } : student;
+                const examData = examSnap.exists() ? examSnap.data() : { status: 'not_taken' };
+
+                // Prefer the student's own record from the database for what's shown
+                // in the banner (course label/title/department/unit). The COURSE_CONFIG
+                // entry is only used as a fallback when the student's DB record doesn't
+                // have that field set, so the dashboard never shows stale/mismatched info.
+                const displayLabel = studentData.course || config.label;
+                const displayTitle = studentData.courseTitle || studentData.courseName || config.title;
+                const displayUnit = studentData.unit || studentData.courseUnit || config.unit;
+                const displayDept = studentData.department || config.department;
+
+                courseTitleEl.textContent = displayTitle;
+                courseSubEl.innerHTML = `${displayLabel} (${displayUnit}) &nbsp;&middot;&nbsp; ${displayDept}`;
+                document.title = `Dashboard \u2013 ${displayLabel} | OSUN STATE UNIVERSITY, OSOGBO, NIGERIA`;
+
+                renderDashboard(studentData, examData);
+            } catch (error) {
+                console.error('Firestore error:', error);
+                renderError('Could not load your dashboard due to a network error. Please refresh the page.');
+            }
+        }
+
+        init();
+    </script>
+
+</body>
+
+</html>

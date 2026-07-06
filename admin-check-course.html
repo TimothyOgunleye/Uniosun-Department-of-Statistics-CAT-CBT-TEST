@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Check Student Results | OSUN STATE UNIVERSITY, OSOGBO, NIGERIA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --emerald-900: #0b3a2c;
+            --emerald-700: #12583f;
+            --emerald-600: #187b58;
+            --emerald-50: #eaf3ef;
+            --gold: #d9a441;
+            --gold-light: #ecc276;
+            --red: #b3452c;
+            --red-50: #fbeeea;
+            --ink: #16211c;
+            --muted: #6b7a72;
+            --bg: #f5f7f6;
+            --line: #e5eae7;
+            --white: #ffffff;
+        }
+
+        html,
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            min-height: 100vh;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Sora', sans-serif;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        /* ─── SITE HEADER (shared) ─── */
+        header.site-header {
+            background: var(--white);
+            border-bottom: 1px solid var(--line);
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+        .header-inner {
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand img {
+            width: 38px;
+            height: 38px;
+            object-fit: contain;
+        }
+
+        .brand-text h1 {
+            font-size: 13.5px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .brand-text p {
+            font-size: 11px;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--emerald-700);
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 20px;
+            background: var(--emerald-50);
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: background .15s;
+        }
+
+        .back-link:hover {
+            background: #dcece4;
+        }
+
+        /* ─── BANNER (shared) ─── */
+        .banner {
+            position: relative;
+            background: radial-gradient(120% 180% at 12% 0%, var(--emerald-600) 0%, var(--emerald-700) 45%, var(--emerald-900) 100%);
+            color: var(--white);
+            overflow: hidden;
+        }
+
+        .banner::before {
+            content: '';
+            position: absolute;
+            width: 340px;
+            height: 340px;
+            border-radius: 50%;
+            background: rgba(217, 164, 65, .14);
+            top: -140px;
+            right: -60px;
+        }
+
+        .banner-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 18px 24px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 22px;
+            flex-wrap: wrap;
+        }
+
+        .banner h2 {
+            font-size: clamp(17px, 2.4vw, 22px);
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .banner .sub {
+            font-size: 12.5px;
+            color: rgba(255, 255, 255, .82);
+            font-weight: 500;
+        }
+
+        main {
+            flex: 1;
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 28px 24px 60px;
+            width: 100%;
+        }
+
+        /* ─── Toolbar ─── */
+        .toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        select,
+        input {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+        }
+
+        .course-select,
+        .dept-select {
+            padding: 10px 14px;
+            border: 1.5px solid var(--line);
+            border-radius: 9px;
+            background: var(--white);
+            color: var(--ink);
+            font-weight: 600;
+            min-width: 200px;
+            cursor: pointer;
+        }
+
+        .search-input {
+            padding: 10px 14px;
+            border: 1.5px solid var(--line);
+            border-radius: 9px;
+            background: var(--white);
+            min-width: 200px;
+        }
+
+        .search-input:focus,
+        .course-select:focus,
+        .dept-select:focus {
+            outline: none;
+            border-color: var(--emerald-600);
+        }
+
+        .btn {
+            border: none;
+            border-radius: 9px;
+            padding: 11px 18px;
+            font-size: 13.5px;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background .15s, transform .15s;
+        }
+
+        .btn-primary {
+            background: var(--emerald-700);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--emerald-600);
+            transform: translateY(-1px);
+        }
+
+        .btn svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        /* ─── Stats ─── */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 14px;
+            margin-bottom: 22px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 16px 18px;
+            box-shadow: 0 2px 10px rgba(11, 58, 44, .04);
+        }
+
+        .stat-card .label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .3px;
+            margin-bottom: 8px;
+        }
+
+        .stat-card .value {
+            font-family: 'Sora', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--emerald-900);
+        }
+
+        .stat-card .value.gold {
+            color: var(--gold);
+        }
+
+        /* ─── Table card ─── */
+        .card {
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            box-shadow: 0 2px 10px rgba(11, 58, 44, .05);
+            overflow: hidden;
+        }
+
+        .card-head {
+            padding: 16px 22px;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .card-head h2 {
+            font-size: 14.5px;
+        }
+
+        .count-pill {
+            background: var(--emerald-50);
+            color: var(--emerald-900);
+            font-size: 11.5px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead th {
+            text-align: left;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+            color: var(--muted);
+            padding: 12px 22px;
+            border-bottom: 1px solid var(--line);
+            background: #fbfcfb;
+        }
+
+        tbody td {
+            padding: 12px 22px;
+            font-size: 13px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: #fafbfa;
+        }
+
+        .matric-cell {
+            font-weight: 700;
+            color: var(--emerald-900);
+        }
+
+        .dept-tag,
+        .status-tag {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 20px;
+            background: var(--emerald-50);
+            color: var(--emerald-900);
+        }
+
+        .status-tag.pending {
+            background: #fdf3e3;
+            color: #8a5a12;
+        }
+
+        .empty-state,
+        .loading-state {
+            padding: 50px 20px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        /* ─── Print-only header block ─── */
+        .print-header {
+            display: none;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            background: var(--white);
+            border-top: 1px solid var(--line);
+            text-align: center;
+            padding: 16px 20px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        footer a {
+            color: var(--emerald-700);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ─── PRINT STYLES ─── */
+        @media print {
+
+            header.site-header,
+            .banner,
+            .toolbar,
+            footer,
+            .no-print {
+                display: none !important;
+            }
+
+            body {
+                background: var(--white);
+            }
+
+            main {
+                padding: 0;
+                max-width: 100%;
+            }
+
+            .print-header {
+                display: block;
+                margin-bottom: 18px;
+                border-bottom: 2px solid var(--emerald-900);
+                padding-bottom: 12px;
+            }
+
+            .print-header .header-top {
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                margin-bottom: 12px;
+            }
+
+            .print-header .logo-print {
+                width: 60px;
+                height: 60px;
+                object-fit: contain;
+            }
+
+            .print-header .uni-name {
+                font-size: 16px;
+                font-weight: 800;
+                color: var(--emerald-900);
+            }
+
+            .print-header .faculty {
+                font-size: 12px;
+                color: var(--ink);
+                margin-top: 2px;
+            }
+
+            .print-header .meta-row {
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 4px 20px;
+                margin-top: 10px;
+                font-size: 11.5px;
+                color: var(--ink);
+            }
+
+            .print-header .meta-row span b {
+                color: var(--emerald-900);
+            }
+
+            .stats-grid {
+                margin-bottom: 14px;
+            }
+
+            .stat-card {
+                box-shadow: none;
+                border: 1px solid var(--line);
+                break-inside: avoid;
+            }
+
+            .card {
+                box-shadow: none;
+                break-inside: avoid;
+            }
+
+            table {
+                font-size: 11.5px;
+            }
+
+            thead {
+                display: table-header-group;
+            }
+
+            tr {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="brand">
+                <img src="3080.png" alt="Osun State University crest">
+                <div class="brand-text">
+                    <h1>Osun State University, Osogbo</h1>
+                    <p>College of Science, Engineering &amp; Technology</p>
+                </div>
+            </div>
+            <a href="admin-dashboard.html" class="back-link">Back to dashboard</a>
+        </div>
+    </header>
+
+    <section class="banner">
+        <div class="banner-inner">
+            <div>
+                <h2>Check Student Results</h2>
+                <p class="sub">Department of Statistics &nbsp;&middot;&nbsp; Select a course and department below</p>
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <!-- Visible only when printing -->
+        <div class="print-header">
+            <div class="header-top">
+                <img src="3080.png" alt="UNIOSUN Logo" class="logo-print">
+                <div>
+                    <div class="uni-name">Osun State University, Osogbo</div>
+                    <div class="faculty">Faculty of Basic and Applied Sciences &middot; Department of Statistics</div>
+                </div>
+            </div>
+            <div class="meta-row">
+                <span>Course: <b id="printCourse">—</b></span>
+                <span>Department: <b id="printDept">—</b></span>
+                <span>Generated: <b id="printDate">—</b></span>
+            </div>
+        </div>
+
+        <div class="toolbar">
+            <div class="toolbar-left">
+                <select id="courseSelect" class="course-select"></select>
+                <select id="deptFilterSelect" class="dept-select"></select>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search name or matric…" />
+            </div>
+            <button class="btn btn-primary" id="printBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M6 9V2h12v7" />
+                    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+                    <path d="M6 14h12v8H6z" />
+                </svg>
+                Print All Results (PDF)
+            </button>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="label">Students</div>
+                <div class="value" id="statTotal">—</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Taken</div>
+                <div class="value gold" id="statTaken">—</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Pending</div>
+                <div class="value" id="statPending">—</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Average score</div>
+                <div class="value" id="statAvg">—</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-head">
+                <h2 id="cardTitle">&nbsp;</h2>
+                <span class="count-pill" id="countPill">0 students</span>
+            </div>
+            <div id="tableWrap">
+                <div class="loading-state">Loading…</div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Course Lecturer for 2nd Semester of 2025/2026 Academic Session: Dr. Timothy A. Ogunleye
+            &nbsp;|&nbsp; <a href="https://timothy-ogunleye.vercel.app/" target="_blank">Lecturer Profile</a></p>
+    </footer>
+
+    <script>
+        // ─── Guard: only allow entry if admin has logged in this session ───
+        if (!sessionStorage.getItem('cbt_admin')) {
+            window.location.href = 'admin-login.html';
+        }
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC1VmwfA08C5hjGSIA6GJAGxq7rt6mlp3E",
+            authDomain: "uniosun-cbt-e1d93.firebaseapp.com",
+            projectId: "uniosun-cbt-e1d93",
+            storageBucket: "uniosun-cbt-e1d93.firebasestorage.app",
+            messagingSenderId: "10024356331",
+            appId: "1:10024356331:web:a81d560a29021a908331ae"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Same course registry used by the dashboard/manage-students page.
+        const COURSES = {
+            STA104_114_students: { code: "STA104_114", label: "STA 104/114 -100 Level", departments: ["Statistics", "Industrial Mathematics", "Geology"] },
+            STA220_214_students: { code: "STA220_214", label: "STA 220/214 -200 Level", departments: ["Statistics"] },
+            STA308_students: { code: "STA308", label: "STA 308 -300 Level", departments: ["Statistics"] },
+            STA304_students: { code: "STA304", label: "STA 304 -300 Level", departments: ["Statistics"] },
+        };
+
+        const courseSelect = document.getElementById('courseSelect');
+        const deptFilterSelect = document.getElementById('deptFilterSelect');
+        const searchInput = document.getElementById('searchInput');
+        const cardTitle = document.getElementById('cardTitle');
+        const countPill = document.getElementById('countPill');
+        const tableWrap = document.getElementById('tableWrap');
+        const printBtn = document.getElementById('printBtn');
+
+        const statTotal = document.getElementById('statTotal');
+        const statTaken = document.getElementById('statTaken');
+        const statPending = document.getElementById('statPending');
+        const statAvg = document.getElementById('statAvg');
+
+        const printCourse = document.getElementById('printCourse');
+        const printDept = document.getElementById('printDept');
+        const printDate = document.getElementById('printDate');
+
+        let currentRows = [];
+
+        for (const [key, cfg] of Object.entries(COURSES)) {
+            const opt = document.createElement('option');
+            opt.value = key; opt.textContent = cfg.label;
+            courseSelect.appendChild(opt);
+        }
+
+        function refreshDeptFilterOptions() {
+            const cfg = COURSES[courseSelect.value];
+            deptFilterSelect.innerHTML = '';
+            const allOpt = document.createElement('option');
+            allOpt.value = 'all'; allOpt.textContent = 'All departments';
+            deptFilterSelect.appendChild(allOpt);
+            cfg.departments.forEach(d => {
+                const o = document.createElement('option');
+                o.value = d; o.textContent = d;
+                deptFilterSelect.appendChild(o);
+            });
+        }
+
+        async function loadResults() {
+            const courseKey = courseSelect.value;
+            const cfg = COURSES[courseKey];
+            cardTitle.textContent = cfg.label;
+            tableWrap.innerHTML = '<div class="loading-state">Loading…</div>';
+
+            try {
+                const [studentsSnap, examsSnap] = await Promise.all([
+                    getDocs(collection(db, courseKey)),
+                    getDocs(collection(db, `${cfg.code}_exams`))
+                ]);
+
+                const examsById = {};
+                examsSnap.forEach(d => { examsById[d.id] = d.data(); });
+
+                currentRows = [];
+                studentsSnap.forEach(d => {
+                    const s = d.data();
+                    const exam = examsById[d.id] || {};
+                    currentRows.push({
+                        docId: d.id,
+                        matric: s.matric || '',
+                        name: s.name || '',
+                        department: s.department || '',
+                        level: s.level || '',
+                        status: exam.status === 'taken' ? 'taken' : 'not_taken',
+                        score: typeof exam.score === 'number' ? exam.score : null
+                    });
+                });
+
+                currentRows.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+                renderTable();
+            } catch (err) {
+                tableWrap.innerHTML = `<div class="empty-state">Couldn't load results: ${err.message}</div>`;
+            }
+        }
+
+        function renderTable() {
+            const q = searchInput.value.trim().toLowerCase();
+            const dept = deptFilterSelect.value;
+            const filtered = currentRows.filter(r => {
+                const matchesSearch = !q || r.name.toLowerCase().includes(q) || r.matric.toLowerCase().includes(q);
+                const matchesDept = !dept || dept === 'all' || r.department === dept;
+                return matchesSearch && matchesDept;
+            });
+
+            const taken = filtered.filter(r => r.status === 'taken');
+            const total = filtered.length;
+            const pending = total - taken.length;
+            const avg = taken.length ? (taken.reduce((sum, r) => sum + (r.score || 0), 0) / taken.length).toFixed(1) : '—';
+
+            statTotal.textContent = total;
+            statTaken.textContent = taken.length;
+            statPending.textContent = pending;
+            statAvg.textContent = avg;
+            countPill.textContent = `${total} student${total === 1 ? '' : 's'}`;
+
+            // Update print header meta
+            printCourse.textContent = cardTitle.textContent;
+            printDept.textContent = dept === 'all' || !dept ? 'All Departments' : dept;
+            printDate.textContent = new Date().toLocaleString();
+
+            if (filtered.length === 0) {
+                tableWrap.innerHTML = '<div class="empty-state">No matching students found.</div>';
+                return;
+            }
+
+            const rows = filtered.map(r => `
+                <tr>
+                    <td class="matric-cell">${r.matric}</td>
+                    <td>${r.name}</td>
+                    <td><span class="dept-tag">${r.department}</span></td>
+                    <td>${r.level}</td>
+                    <td>${r.status === 'taken' ? '<span class="status-tag">Taken</span>' : '<span class="status-tag pending">Pending</span>'}</td>
+                    <td>${r.score === null ? '—' : r.score}</td>
+                </tr>
+            `).join('');
+
+            tableWrap.innerHTML = `
+                <table>
+                    <thead><tr><th>Matric</th><th>Name</th><th>Department</th><th>Level</th><th>Status</th><th>Score</th></tr></thead>
+                    <tbody>${rows}</tbody>
+                </table>
+            `;
+        }
+
+        courseSelect.addEventListener('change', () => { refreshDeptFilterOptions(); loadResults(); });
+        deptFilterSelect.addEventListener('change', renderTable);
+        searchInput.addEventListener('input', renderTable);
+
+        printBtn.addEventListener('click', () => {
+            // Refresh the print header meta right before opening the print dialog
+            printCourse.textContent = cardTitle.textContent;
+            printDept.textContent = deptFilterSelect.value === 'all' ? 'All Departments' : deptFilterSelect.value;
+            printDate.textContent = new Date().toLocaleString();
+            window.print();
+        });
+
+        // ── Init ──
+        refreshDeptFilterOptions();
+        loadResults();
+    </script>
+</body>
+
+</html>

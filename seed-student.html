@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin &ndash; Approved Department Lists (Multiple Courses)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --emerald-900: #0b3a2c;
+            --emerald-700: #12583f;
+            --emerald-600: #187b58;
+            --emerald-50: #eaf3ef;
+            --gold: #d9a441;
+            --gold-light: #ecc276;
+            --red: #b3452c;
+            --red-50: #fbeeea;
+            --ink: #16211c;
+            --muted: #6b7a72;
+            --bg: #f5f7f6;
+            --line: #e5eae7;
+            --white: #ffffff;
+        }
+
+        html,
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            min-height: 100vh;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1,
+        h2 {
+            font-family: 'Sora', sans-serif;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        /* ─── SITE HEADER (shared) ─── */
+        header.site-header {
+            background: var(--white);
+            border-bottom: 1px solid var(--line);
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+        .header-inner {
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand img {
+            width: 38px;
+            height: 38px;
+            object-fit: contain;
+        }
+
+        .brand-text h1 {
+            font-size: 13.5px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .brand-text p {
+            font-size: 11px;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--emerald-700);
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 20px;
+            background: var(--emerald-50);
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: background .15s;
+        }
+
+        .back-link:hover {
+            background: #dcece4;
+        }
+
+        /* ─── BANNER (shared) ─── */
+        .banner {
+            position: relative;
+            background: radial-gradient(120% 180% at 12% 0%, var(--emerald-600) 0%, var(--emerald-700) 45%, var(--emerald-900) 100%);
+            color: var(--white);
+            overflow: hidden;
+        }
+
+        .banner::before {
+            content: '';
+            position: absolute;
+            width: 340px;
+            height: 340px;
+            border-radius: 50%;
+            background: rgba(217, 164, 65, .14);
+            top: -140px;
+            right: -60px;
+        }
+
+        .banner-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 18px 24px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 22px;
+            flex-wrap: wrap;
+        }
+
+        .banner h2 {
+            font-size: clamp(17px, 2.4vw, 22px);
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .banner .sub {
+            font-size: 12.5px;
+            color: rgba(255, 255, 255, .82);
+            font-weight: 500;
+        }
+
+        main {
+            flex: 1;
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 28px 20px 60px;
+            width: 100%;
+        }
+
+        .intro {
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 24px 28px;
+            box-shadow: 0 2px 10px rgba(11, 58, 44, .05);
+            margin-bottom: 22px;
+        }
+
+        .intro h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: var(--emerald-900);
+        }
+
+        .intro p {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.55;
+        }
+
+        .card {
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 24px 28px;
+            box-shadow: 0 2px 10px rgba(11, 58, 44, .05);
+            margin-bottom: 18px;
+        }
+
+        .card h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 16px;
+            color: var(--emerald-900);
+            margin-bottom: 4px;
+        }
+
+        .card p.course-title {
+            font-size: 13px;
+            color: var(--emerald-700);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .card p.meta {
+            font-size: 12.5px;
+            color: var(--muted);
+            margin-bottom: 16px;
+        }
+
+        .card p.meta code {
+            background: var(--emerald-50);
+            padding: 1px 6px;
+            border-radius: 5px;
+        }
+
+        button {
+            background: var(--emerald-700);
+            color: var(--white);
+            border: none;
+            padding: 11px 20px;
+            border-radius: 9px;
+            font-size: 13.5px;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background: #b9c4bd;
+            cursor: not-allowed;
+        }
+
+        button:hover:not(:disabled) {
+            background: var(--emerald-600);
+        }
+
+        .stats {
+            display: flex;
+            gap: 16px;
+            margin-top: 16px;
+            font-size: 12.5px;
+        }
+
+        .stats b {
+            display: block;
+            font-size: 18px;
+            color: var(--emerald-900);
+        }
+
+        .log {
+            margin-top: 14px;
+            background: var(--emerald-50);
+            border-radius: 9px;
+            padding: 12px 14px;
+            font-size: 12px;
+            line-height: 1.55;
+            max-height: 260px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+            font-family: 'Consolas', monospace;
+            display: none;
+        }
+
+        .danger-card {
+            border-color: #efd3ca;
+            background: #fffaf8;
+        }
+
+        .danger-heading {
+            color: var(--red) !important;
+        }
+
+        .danger-btn {
+            background: var(--red);
+        }
+
+        .danger-btn:hover:not(:disabled) {
+            background: #963a24;
+        }
+
+        .danger-btn:disabled {
+            background: #d9b4aa;
+        }
+
+        #clearLog {
+            background: var(--red-50);
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            background: var(--white);
+            border-top: 1px solid var(--line);
+            text-align: center;
+            padding: 16px 20px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        footer a {
+            color: var(--emerald-700);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .banner-inner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+                padding: 20px 20px 22px;
+            }
+
+            main {
+                padding: 24px 16px 44px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="brand">
+                <img src="3080.png" alt="Osun State University crest">
+                <div class="brand-text">
+                    <h1>Osun State University, Osogbo</h1>
+                    <p>College of Science, Engineering &amp; Technology</p>
+                </div>
+            </div>
+            <a href="admin-dashboard.html" class="back-link">Back to dashboard</a>
+        </div>
+    </header>
+
+    <section class="banner">
+        <div class="banner-inner">
+            <div>
+                <h2>Approved Department Lists</h2>
+                <p class="sub">Department of Statistics &nbsp;&middot;&nbsp; One-time roster import per course</p>
+            </div>
+        </div>
+    </section>
+
+    <main>
+     
+
+        <div class="card" id="card-104">
+            <h3>STA 104/114 &ndash; 100 Level (Statistics, Industrial Mathematics, Geology)</h3>
+            <p class="course-title">Statistical Computing I</p>
+            <p class="meta">Writes to collection <code>STA104_114_students</code> &middot; <span id="count-104"></span>
+                students</p>
+            <button data-course="104">Approve Department</button>
+            <div class="stats" style="display:none;">
+                <div><b class="stat-total">0</b>Total</div>
+                <div><b class="stat-ok">0</b>Written</div>
+                <div><b class="stat-fail">0</b>Failed</div>
+            </div>
+            <div class="log"></div>
+        </div>
+
+        <div class="card" id="card-220">
+            <h3>STA 220/214 &ndash; 200 Level (Statistics)</h3>
+            <p class="course-title">Introduction to Statistical Packages IV / Statistical Computing II</p>
+            <p class="meta">Writes to collection <code>STA220_214_students</code> &middot; <span id="count-220"></span>
+                students</p>
+            <button data-course="220">Approve Department</button>
+            <div class="stats" style="display:none;">
+                <div><b class="stat-total">0</b>Total</div>
+                <div><b class="stat-ok">0</b>Written</div>
+                <div><b class="stat-fail">0</b>Failed</div>
+            </div>
+            <div class="log"></div>
+        </div>
+
+        <div class="card" id="card-308">
+            <h3>STA 308 &ndash; 300 Level (Statistics)</h3>
+            <p class="course-title">Laboratory Fieldwork for Survey Methods and Sampling Theory</p>
+            <p class="meta">Writes to collection <code>STA308_students</code> &middot; <span id="count-308"></span>
+                students</p>
+            <button data-course="308">Approve Department</button>
+            <div class="stats" style="display:none;">
+                <div><b class="stat-total">0</b>Total</div>
+                <div><b class="stat-ok">0</b>Written</div>
+                <div><b class="stat-fail">0</b>Failed</div>
+            </div>
+            <div class="log"></div>
+        </div>
+
+        <div class="card" id="card-304">
+            <h3>STA 304 &ndash; 300 Level (Statistics)</h3>
+            <p class="course-title">Statistical Computing III</p>
+            <p class="meta">Writes to collection <code>STA304_students</code> &middot; <span id="count-304"></span>
+                students</p>
+            <button data-course="304">Approve Department</button>
+            <div class="stats" style="display:none;">
+                <div><b class="stat-total">0</b>Total</div>
+                <div><b class="stat-ok">0</b>Written</div>
+                <div><b class="stat-fail">0</b>Failed</div>
+            </div>
+            <div class="log"></div>
+        </div>
+
+        <div class="card danger-card">
+            <h3 class="danger-heading">Clear Database</h3>
+            <p class="meta">
+                This permanently deletes <b>every document</b> in <code>STA104 114 students</code>,
+                <code>STA104 114 exams</code>, <code>STA220 214 students</code>, <code>STA220 214 exams</code>,
+                <code>STA308 students</code>, <code>STA308 exams</code>, <code>STA304 students</code>, and
+                <code>STA304 exams</code>- every student, every in-progress/submitted exam, for every course.
+                There is <b>no undo</b>. You'll be asked to confirm twice before anything is deleted.
+            </p>
+            <button id="clearDbBtn" class="danger-btn">Remove &amp; clear database</button>
+            <div class="stats" id="clearStats" style="display:none;">
+                <div><b class="stat-total" id="clear-total">0</b>Found</div>
+                <div><b class="stat-ok" id="clear-ok">0</b>Deleted</div>
+                <div><b class="stat-fail" id="clear-fail">0</b>Failed</div>
+            </div>
+            <div class="log" id="clearLog"></div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Course Lecturer for 2nd Semester of 2025/2026 Academic Session: Dr. Timothy A. Ogunleye
+            &nbsp;|&nbsp; <a href="https://timothy-ogunleye.vercel.app/" target="_blank">Lecturer Profile</a></p>
+    </footer>
+
+    <script>
+        // ─── Guard: only allow entry if admin has logged in this session ───
+        if (!sessionStorage.getItem('cbt_admin')) {
+            window.location.href = 'admin-login.html';
+        }
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, doc, setDoc, collection, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC1VmwfA08C5hjGSIA6GJAGxq7rt6mlp3E",
+            authDomain: "uniosun-cbt-e1d93.firebaseapp.com",
+            projectId: "uniosun-cbt-e1d93",
+            storageBucket: "uniosun-cbt-e1d93.firebasestorage.app",
+            messagingSenderId: "10024356331",
+            appId: "1:10024356331:web:a81d560a29021a908331ae"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // ── Rosters ──────────────────────────────────────────────────
+        // Each entry: [name, matric, department]
+
+        const roster104 = [
+            // Statistics
+            ["Aasa Kayode Samson", "2025/73230", "Statistics"],
+            ["Bashiru Rofiat Yetunde", "2025/75563", "Statistics"],
+            ["Oguntunsin Kehinde Heritage", "2025/73241", "Statistics"],
+            ["Muritala Abdulahi Gbolahan", "2025/73239", "Statistics"],
+            ["Akinboyo Moses", "2025/74596", "Statistics"],
+            ["Tiamiyu Latyphat Folashade", "2025/73248", "Statistics"],
+            ["Anietie Samuel", "2025/75562", "Statistics"],
+            ["Toheeb Yusuf Olarewaju", "2025/73249", "Statistics"],
+            ["Olawale Halimah", "2025/67530", "Statistics"],
+            ["Jimoh Damilare Sodiq", "2025/75564", "Statistics"],
+            ["Amadi Peter Odinaka", "2025/75561", "Statistics"],
+            ["Olatunji Gideon Oluwasemilore", "2025/75565", "Statistics"],
+            ["Omosanjo Fiyinfoluwa", "2025/73245", "Statistics"],
+            ["Oluyemi Obaloluwa Johnson", "2025/67761", "Statistics"],
+            ["Adeniji Pelumi Mojeed", "2025/73232", "Statistics"],
+            ["Abraham Timothy Oluwadamilare", "2025/73231", "Statistics"],
+            ["Salako Faruq Olayiwola", "2025/73247", "Statistics"],
+            ["Kehinde Wasiu", "2025/73237", "Statistics"],
+            ["Agbaje Heritage Oluwatunmise", "2025/67526", "Statistics"],
+            ["Adejumo Oyeyemi Samson", "2025/75560", "Statistics"],
+            ["Olaojo Ayanfeoluwa Samuel", "2025/73243", "Statistics"],
+            ["Akinsioye Ifeoluwa", "2025/73234", "Statistics"],
+            ["Oludele Israel", "2025/73244", "Statistics"],
+            ["Kolawole Emmanuel", "2025/73238", "Statistics"],
+            ["Okunola Adeola Oluwaferanmi", "2025/67529", "Statistics"],
+            ["Francis Oluwatobiloba Kojo", "2025/73236", "Statistics"],
+            ["Balogun Yinka", "2025/73235", "Statistics"],
+            ["Oladapo Kayode Abdul Garfar", "2025/73242", "Statistics"],
+            ["Oyedele Samuel Oluwatobi", "2025/73246", "Statistics"],
+            ["Idowu Emmanuel Oriyomi", "2025/67527", "Statistics"],
+            ["Obayemi Olamide Sherif", "2025/73240", "Statistics"],
+            ["Akangbe Roseline", "2025/73233", "Statistics"],
+            ["Umoren Favour", "2025/75986", "Statistics"],
+            ["Jayeoba Eunice Peculiar", "2024/56983", "Statistics"],
+            ["Ogundele Saheed Abiodun", "2024/63045", "Statistics"],
+            ["Abdulazeez Abdulsalam Ayobami", "2024/61248", "Statistics"],
+            ["Adeyinka Daniel Babatunde", "2024/56979", "Statistics"],
+            ["Ogunjobi Oluwapelumi Victoria", "2025/67528", "Statistics"],
+
+            // Industrial Mathematics
+            ["Awoyemi Ifetayo Victor", "2025/74283", "Industrial Mathematics"],
+            ["Adegboyega Emmanuel Adedotun", "2025/67275", "Industrial Mathematics"],
+            ["Eluyinka Martins Boluwatife", "2025/67677", "Industrial Mathematics"],
+            ["Popoola David Ayomide", "2025/72734", "Industrial Mathematics"],
+            ["Omidire Mary Jumoke", "2025/72732", "Industrial Mathematics"],
+            ["Oladiran Victor Olamide", "2025/72731", "Industrial Mathematics"],
+            ["Adeshina Feranmi", "2025/75804", "Industrial Mathematics"],
+            ["Aremu Jamaldeen Ayomide", "2025/75070", "Industrial Mathematics"],
+            ["Akinbiola David Oluwadunmininu", "2025/72724", "Industrial Mathematics"],
+            ["Taiwo Tokunbo Adetayo", "2025/67278", "Industrial Mathematics"],
+            ["Adebesin Usirat Oyindamola", "2025/72719", "Industrial Mathematics"],
+            ["Badmus Abraham Adewale", "2025/75071", "Industrial Mathematics"],
+            ["Akanbi Abdulmalik Ademola", "2025/72723", "Industrial Mathematics"],
+            ["Aderibigbe Ibrahim Adekunle", "2025/72721", "Industrial Mathematics"],
+            ["Emmanuel Segun Israel", "2025/72726", "Industrial Mathematics"],
+            ["Olajide Lawrence Ayomide", "202551981108CA", "Industrial Mathematics"],
+            ["Adeyemo Happy Adegunwasoye", "2025/72722", "Industrial Mathematics"],
+            ["Olatinwo Korede Malik", "2025/74285", "Industrial Mathematics"],
+            ["Mayeloye Pelumi Kareem", "2025/74284", "Industrial Mathematics"],
+            ["Afolabi Victor Akinsola", "2025/75069", "Industrial Mathematics"],
+            ["Azeez Hamid Olamilekan", "2025/72725", "Industrial Mathematics"],
+            ["Ufomba Vincent Odichinma", "2025/72735", "Industrial Mathematics"],
+            ["Adeleke Waris Akorede", "2025/72720", "Industrial Mathematics"],
+            ["Adeyemi God'sfortune Adefolahan", "2025/74281", "Industrial Mathematics"],
+            ["Olayinka Tayo Timileyin", "2025/75072", "Industrial Mathematics"],
+            ["Iyanda Ramadan Olamilekan", "2025/72728", "Industrial Mathematics"],
+            ["Ogemuhor Odunayo Justice", "2025/72729", "Industrial Mathematics"],
+            ["Alleh Victory Segun", "2025/67277", "Industrial Mathematics"],
+            ["Oyewale Phoebe Adunoreofe", "2025/72733", "Industrial Mathematics"],
+            ["Ibrahim Saheed Timileyin", "2025/72727", "Industrial Mathematics"],
+            ["Aina Oluwatobi Joseph", "2025/67276", "Industrial Mathematics"],
+            ["Oladele Temiloluwa Isreal", "2025/72730", "Industrial Mathematics"],
+            ["Afolabi Mercy Ifeoluwa", "2025/74282", "Industrial Mathematics"],
+            ["Abdullah Abdulmuihz Ayobami", "2025/74280", "Industrial Mathematics"],
+
+            // Geology
+            ["Mustapha Bisola Nimota", "2025/67219", "Geology"],
+            ["Emefiele Victoria Ifeanyi", "2025/74260", "Geology"],
+            ["Adediwura Seyi Alade", "2025/72483", "Geology"],
+            ["Owolabi Quadri Ayomide", "2025/72498", "Geology"],
+            ["Asala Deborah Busola", "2025/72486", "Geology"],
+            ["Musa Abdulsalam Olamilekan", "2025/72491", "Geology"],
+            ["Hassan Abdulmalik Ajibola", "2025/67218", "Geology"],
+            ["Tijani Mahamud Oyindamola", "2025/67224", "Geology"],
+            ["Ogunleke Godwin Oluwasegun", "2025/72492", "Geology"],
+            ["Adeola Mathew Thankgod", "2025/67216", "Geology"],
+            ["Abdulbasit Okunoye", "2025/67220", "Geology"],
+            ["Alamu Elijah Ayodeji", "2025/72485", "Geology"],
+            ["Obisesan Oluwagbeminiyi Emmanuel", "2025/67814", "Geology"],
+            ["Jubril Monsurat Ikeoluwa", "2025/72489", "Geology"],
+            ["Dike Martins Eucharia", "2025/72487", "Geology"],
+            ["Muhammed Abdul Muiz", "2025/72490", "Geology"],
+            ["Ojekemi Grace Funmilayo", "2025/75784", "Geology"],
+            ["Abidoye Samad Ayomide", "2025/72482", "Geology"],
+            ["Adeleke Precious Oluwasegun", "2025/67215", "Geology"],
+            ["Adewoyin Samuel Oluwaseun", "2025/67217", "Geology"],
+            ["Osiyale Richard Olami", "2025/72497", "Geology"],
+            ["Dasaolu Samuel", "2025/76082", "Geology"],
+            ["Abraham Joshua Temitope", "2025/67214", "Geology"],
+            ["Olalekan Ademola Adebisi", "2025/72494", "Geology"],
+            ["Olalemi Peter Adetunji", "2025/67221", "Geology"],
+            ["Akorede Umar Omotosho", "2025/72484", "Geology"],
+            ["Oyewole Farooq Gbolahan", "2025/67222", "Geology"],
+            ["Lawal Malik Kolawole", "2025/74497", "Geology"],
+            ["Shittu Quadri Oyewole", "2025/67223", "Geology"],
+            ["Ojo Oluwasogo Olashile", "2025/72493", "Geology"],
+            ["Abideen Umar Olatunji", "2025/72481", "Geology"],
+            ["Oni Gbenga Victor", "2025/76212", "Geology"],
+            ["Olomola Thomas Oluwasegun", "2025/72495", "Geology"],
+            ["Olumayo Micheal Oluwabolaji", "2025/75014", "Geology"],
+            ["Ilori Samuel Oluranti", "2025/72488", "Geology"],
+            ["Usman Badmus Opeyemi", "2024/61043", "Geology"],
+            ["Muhammed Ramotallahi Ayomide", "2024/59927", "Geology"],
+            ["Alegbeleye Moyosoreoluwa Toluwalase", "2024/61042", "Geology"],
+            ["Fayanju Goodness Fikayomi", "2024/59179", "Geology"],
+            ["Oladipo Opeyemi Daniel", "2024/60226", "Geology"],
+            ["Wahab Abdulsamad Olanrewaju", "2024/59181", "Geology"],
+            ["Yusuf Aishat Akorede", "2024/56595", "Geology"],
+            ["Oladimeji Aduragbemi Henry", "2024/56589", "Geology"],
+            ["Adesami Hassan Olanrewaju", "2024/60224", "Geology"],
+            ["Adeoye Adeola Abdul-Hazeem", "2024/57575", "Geology"],
+            ["Oroyemi Aduragbemi Ezekiel", "2024/63656", "Geology"],
+            ["Samuel Damilola Samson", "2024/59180", "Geology"],
+            ["Oyekanmi Yusuf Adekunle", "2024/61426", "Geology"],
+            ["Oluneye Ayomide Joseph", "2024/59928", "Geology"],
+            ["Adebisi Oyindamola Filicia", "2024/63547", "Geology"],
+        ];
+
+        const roster220 = [
+            // NOTE: entry #3 was printed with no spaces in the source list ("Oyeladeseyipelumi").
+            // Split here as a best guess -please verify against the original roster.
+            ["Abdulyekeen Azeezat Opeyemi", "2024/56978", "Statistics"],
+            ["Komolafe Oluwaferanmi Elizabeth", "2024/58408", "Statistics"],
+            ["Oyelade Seyi Pelumi", "2024/60125", "Statistics"],
+            ["Ogundele Saheed Abiodun", "2024/63045", "Statistics"],
+            ["Adekunle Zururot Kikelomo", "2025/75566", "Statistics"],
+            ["Ajayi Ibukun Moses", "2024/61611", "Statistics"],
+            ["Isiaka Taiwo Hassan", "2024/60820", "Statistics"],
+            ["Tijani Balkis Ayoka", "2025/74426", "Statistics"],
+            ["Abdulazeez Abdulsalam Ayobami", "2024/61248", "Statistics"],
+            ["Raji Abdulazeem Adeyemi", "2024/57663", "Statistics"],
+            ["Gbadeyanka Abdullahi Adekunle", "2024/62313", "Statistics"],
+            ["Fakorede Benjamin Opeyemi", "2024/56981", "Statistics"],
+            ["Ajao Samuel Precious", "2024/56980", "Statistics"],
+            ["Iroko Ayuba Boluwatife", "2024/56982", "Statistics"],
+            ["Olatunde Eniola Mary", "2024/56985", "Statistics"],
+            ["Olaniran Akinola Oluwabamise", "2024/58409", "Statistics"],
+            ["Adewunmi Gbolahan Ifedapo", "2024/59703", "Statistics"],
+            ["Jayeoba Eunice Peculiar", "2024/56983", "Statistics"],
+            ["Obidiegwu Victor Chimamazugo", "2024/56984", "Statistics"],
+            ["Fabanwo Folaranmi Victor", "2024/63044", "Statistics"],
+            ["Ogundele Boluwatife Daniel", "2024/63427", "Statistics"],
+            ["Adeniyi Latifat Ayomide", "2025/74424", "Statistics"],
+            ["Oyekunle Sefiu Tunde", "2025/74425", "Statistics"],
+            ["Oshunrinde Martins Olawale", "2024/58696", "Statistics"],
+            ["Ojukwu Chinonso Oluwadamilare", "2024/60124", "Statistics"],
+            ["Ekundayo Kingsley Favour", "2024/63043", "Statistics"],
+            ["Sanni Oluwatimileyin Daniel", "2024/62315", "Statistics"],
+            ["Adeyinka Daniel Babatunde", "2024/56979", "Statistics"],
+            ["Ojomo Oyindamola Cherish", "2024/61613", "Statistics"],
+            ["Odunayo Samuel Olamilekan", "2024/61612", "Statistics"],
+            ["Okunade Oluwaferanmi Emmanuel", "2024/61249", "Statistics"],
+            ["Lamidi Fathia Olamide", "2024/62314", "Statistics"],
+            ["Ajiboye Aanuoluwapo Abraham", "2023/47156", "Statistics"],
+        ];
+
+        const roster308 = [
+            ["Ige Hammed Ololade", "2023/50029", "Statistics"],
+            ["Iroh Daniel Taiwo", "2023/47158", "Statistics"],
+            ["Olawepo Moses Akinola", "2023/48241", "Statistics"],
+            ["Ajiboye Aanuoluwapo Abraham", "2023/47156", "Statistics"],
+            ["Adejayan Samson Temidayo", "2023/50764", "Statistics"],
+            ["Abobade Charles Olaniyi", "2023/47154", "Statistics"],
+            ["Ajani Rokibat Omotolani", "2024/57664", "Statistics"],
+            ["Abdulkareem Amidat", "2024/58410", "Statistics"],
+            ["Adekunle Nasirat Kehinde", "2024/60126", "Statistics"],
+            ["Mufutau Kafayat Adunni", "2024/60127", "Statistics"],
+            ["Aremu Ridwan Dolapo", "2024/57665", "Statistics"],
+            ["Olawoyin Oladoyin Christiannah", "2023/51408", "Statistics"],
+            ["Bello Happiness Rakiyat", "2023/51062", "Statistics"],
+            ["Abioye Joel Oluwapelumi", "2024/56986", "Statistics"],
+            ["Oladejo Emmanuel Kolawole", "2023/49462", "Statistics"],
+            ["Benjamin Wahab", "2023/47161", "Statistics"],
+            ["Ridwan Abdullahi", "2022/43137", "Statistics"],
+            ["Taofeek Olamilekan Sodiq", "2022/42029", "Statistics"],
+            ["Amusat Lawal Eniola", "2023/48240", "Statistics"],
+            ["Olajide Oluwatimileyin Damilare", "2023/47159", "Statistics"],
+            ["Akintade Akintayo", "2022/42017", "Statistics"],
+            ["Oyewale Damilola Oluwabunmi", "2023/47160", "Statistics"],
+            ["Awotayo Adeyemi Oluwatofunmi", "2023/47157", "Statistics"],
+            ["Olayinka Ademidun Esther", "2023/50030", "Statistics"],
+            ["Adeleke Muideen Okikiola", "2022/42013", "Statistics"],
+        ];
+
+        const roster304 = [
+            ["Ige Hammed Ololade", "2023/50029", "Statistics"],
+            ["Iroh Daniel Taiwo", "2023/47158", "Statistics"],
+            ["Olawepo Moses Akinola", "2023/48241", "Statistics"],
+            ["Ajiboye Aanuoluwapo Abraham", "2023/47156", "Statistics"],
+            ["Adejayan Samson Temidayo", "2023/50764", "Statistics"],
+            ["Abobade Charles Olaniyi", "2023/47154", "Statistics"],
+            ["Ajani Rokibat Omotolani", "2024/57664", "Statistics"],
+            ["Abdulkareem Amidat", "2024/58410", "Statistics"],
+            ["Adekunle Nasirat Kehinde", "2024/60126", "Statistics"],
+            ["Mufutau Kafayat Adunni", "2024/60127", "Statistics"],
+            ["Aremu Ridwan Dolapo", "2024/57665", "Statistics"],
+            ["Olawoyin Oladoyin Christiannah", "2023/51408", "Statistics"],
+            ["Bello Happiness Rakiyat", "2023/51062", "Statistics"],
+            ["Abioye Joel Oluwapelumi", "2024/56986", "Statistics"],
+            ["Oladejo Emmanuel Kolawole", "2023/49462", "Statistics"],
+            ["Benjamin Wahab", "2023/47161", "Statistics"],
+            ["Ridwan Abdullahi", "2022/43137", "Statistics"],
+            ["Taofeek Olamilekan Sodiq", "2022/42029", "Statistics"],
+            ["Amusat Lawal Eniola", "2023/48240", "Statistics"],
+            ["Olajide Oluwatimileyin Damilare", "2023/47159", "Statistics"],
+            ["Akintade Akintayo", "2022/42017", "Statistics"],
+            ["Oyewale Damilola Oluwabunmi", "2023/47160", "Statistics"],
+            ["Awotayo Adeyemi Oluwatofunmi", "2023/47157", "Statistics"],
+            ["Olayinka Ademidun Esther", "2023/50030", "Statistics"],
+            ["Adeleke Muideen Okikiola", "2022/42013", "Statistics"],
+            ["Ngozi Chimdi Christian", "2021/36554", "Statistics"],
+            ["Akinade Samuel Ayomiposi", "2022/42014", "Statistics"],
+            ["Ojelabi Miracle Oluwatosin", "2023/52013", "Statistics"],
+        ];
+
+        // Each course's code (as shown to students, e.g. on the dashboard banner),
+        // full title, and unit load. These get written onto every student record
+        // in that course's collection, so pages like the dashboard can read the
+        // correct course code/title straight from the student's own DB record
+        // instead of relying on a hardcoded page-level value.
+        const COURSES = {
+            "104": {
+                collection: "STA104_114_students",
+                examsCollection: "STA104_114_exams",
+                roster: roster104,
+                label: "STA 104/114",
+                title: "Statistical Computing I",
+                unit: "2 Units",
+            },
+            "220": {
+                collection: "STA220_214_students",
+                examsCollection: "STA220_214_exams",
+                roster: roster220,
+                label: "STA 220/214",
+                title: "Introduction to Statistical Packages IV / Statistical Computing II",
+                unit: "2 Units",
+            },
+            "308": {
+                collection: "STA308_students",
+                examsCollection: "STA308_exams",
+                roster: roster308,
+                label: "STA 308",
+                title: "Laboratory Fieldwork for Survey Methods and Sampling Theory",
+                unit: "2 Units",
+            },
+            "304": {
+                collection: "STA304_students",
+                examsCollection: "STA304_exams",
+                roster: roster304,
+                label: "STA 304",
+                title: "Statistical Computing III",
+                unit: "2 Units",
+            },
+        };
+        // ─────────────────────────────────────────────────────────────
+
+        function normalizeMatric(m) {
+            return m.trim().toUpperCase().replace(/\s+/g, '');
+        }
+
+        function toDocId(matric) {
+            return matric.replace(/\//g, '_');
+        }
+
+        function toTitleCase(str) {
+            return str.trim().toLowerCase().split(/\s+/)
+                .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+                .join(' ');
+        }
+
+        // Show roster counts next to each card heading
+        for (const key of Object.keys(COURSES)) {
+            const el = document.getElementById(`count-${key}`);
+            if (el) el.textContent = COURSES[key].roster.length;
+        }
+
+        const allButtons = document.querySelectorAll('button[data-course]');
+
+        async function runImport(key) {
+            const { collection, roster, label, title, unit } = COURSES[key];
+            const card = document.getElementById(`card-${key}`);
+            const btn = card.querySelector('button');
+            const statsEl = card.querySelector('.stats');
+            const statTotal = card.querySelector('.stat-total');
+            const statOk = card.querySelector('.stat-ok');
+            const statFail = card.querySelector('.stat-fail');
+            const logEl = card.querySelector('.log');
+
+            allButtons.forEach(b => b.disabled = true);
+            btn.textContent = 'Approving…';
+            logEl.style.display = 'block';
+            logEl.textContent = '';
+            statsEl.style.display = 'flex';
+            statTotal.textContent = roster.length;
+            statOk.textContent = 0;
+            statFail.textContent = 0;
+
+            let ok = 0, fail = 0;
+
+            function log(line) {
+                logEl.textContent += line + '\n';
+                logEl.scrollTop = logEl.scrollHeight;
+            }
+
+            for (const [rawName, rawMatric, department] of roster) {
+                const matric = normalizeMatric(rawMatric);
+                const docId = toDocId(matric);
+                const name = toTitleCase(rawName);
+
+                try {
+                    await setDoc(doc(db, collection, docId), {
+                        matric,
+                        name,
+                        department,
+                        course: label,
+                        courseTitle: title,
+                        unit
+                    }, { merge: true });
+                    ok++;
+                    log(`✓ ${name} (${matric}) -${department}`);
+                } catch (err) {
+                    fail++;
+                    log(`✗ FAILED: ${name} (${matric}) -${err.message}`);
+                }
+
+                statOk.textContent = ok;
+                statFail.textContent = fail;
+            }
+
+            btn.textContent = 'Department approved';
+            log(`\nDone. ${ok} written, ${fail} failed, out of ${roster.length} total.`);
+            allButtons.forEach(b => { if (b !== btn) b.disabled = false; });
+        }
+
+        allButtons.forEach(btn => {
+            btn.addEventListener('click', () => runImport(btn.dataset.course));
+        });
+
+        // ── Danger zone: clear entire database ──
+        const clearDbBtn = document.getElementById('clearDbBtn');
+        const clearStats = document.getElementById('clearStats');
+        const clearTotalEl = document.getElementById('clear-total');
+        const clearOkEl = document.getElementById('clear-ok');
+        const clearFailEl = document.getElementById('clear-fail');
+        const clearLogEl = document.getElementById('clearLog');
+
+        function clearLog(line) {
+            clearLogEl.textContent += line + '\n';
+            clearLogEl.scrollTop = clearLogEl.scrollHeight;
+        }
+
+        async function deleteAllDocsIn(collectionName) {
+            const snap = await getDocs(collection(db, collectionName));
+            let ok = 0, fail = 0;
+            for (const docSnap of snap.docs) {
+                try {
+                    await deleteDoc(doc(db, collectionName, docSnap.id));
+                    ok++;
+                    clearLog(`✓ deleted ${collectionName}/${docSnap.id}`);
+                } catch (err) {
+                    fail++;
+                    clearLog(`✗ FAILED ${collectionName}/${docSnap.id} -${err.message}`);
+                }
+            }
+            return { found: snap.docs.length, ok, fail };
+        }
+
+        clearDbBtn.addEventListener('click', async () => {
+            const firstConfirm = confirm(
+                'This will PERMANENTLY delete every student record and every exam record, ' +
+                'for ALL courses (STA 104/114, STA 220/214, STA 308, STA 304). This cannot be undone. Continue?'
+            );
+            if (!firstConfirm) return;
+
+            const secondConfirm = confirm(
+                'Final check: are you absolutely sure you want to wipe the entire database? ' +
+                'There is no way to recover this data afterwards.'
+            );
+            if (!secondConfirm) return;
+
+            allButtons.forEach(b => b.disabled = true);
+            clearDbBtn.disabled = true;
+            clearDbBtn.textContent = 'Clearing…';
+            clearLogEl.style.display = 'block';
+            clearLogEl.textContent = '';
+            clearStats.style.display = 'flex';
+            clearTotalEl.textContent = 0;
+            clearOkEl.textContent = 0;
+            clearFailEl.textContent = 0;
+
+            let totalFound = 0, totalOk = 0, totalFail = 0;
+
+            for (const key of Object.keys(COURSES)) {
+                const { collection: studentsCol, examsCollection, label } = COURSES[key];
+                clearLog(`\n── ${label} ──`);
+
+                clearLog(`Clearing ${studentsCol}…`);
+                const r1 = await deleteAllDocsIn(studentsCol);
+                totalFound += r1.found; totalOk += r1.ok; totalFail += r1.fail;
+                clearTotalEl.textContent = totalFound;
+                clearOkEl.textContent = totalOk;
+                clearFailEl.textContent = totalFail;
+
+                clearLog(`Clearing ${examsCollection}…`);
+                const r2 = await deleteAllDocsIn(examsCollection);
+                totalFound += r2.found; totalOk += r2.ok; totalFail += r2.fail;
+                clearTotalEl.textContent = totalFound;
+                clearOkEl.textContent = totalOk;
+                clearFailEl.textContent = totalFail;
+            }
+
+            clearDbBtn.textContent = 'Database cleared';
+            clearLog(`\nDone. ${totalOk} deleted, ${totalFail} failed, out of ${totalFound} documents found.`);
+            allButtons.forEach(b => b.disabled = false);
+        });
+    </script>
+</body>
+
+</html>

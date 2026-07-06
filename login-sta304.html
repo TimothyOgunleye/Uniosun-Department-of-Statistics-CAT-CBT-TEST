@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login &ndash; STA 304 | OSUN STATE UNIVERSITY, OSOGBO, NIGERIA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --emerald-900: #0b3a2c;
+            --emerald-700: #12583f;
+            --emerald-600: #187b58;
+            --emerald-50: #eaf3ef;
+            --gold: #d9a441;
+            --gold-light: #ecc276;
+            --blue: #3b6ea5;
+            --red: #b3452c;
+            --red-50: #fbeeea;
+            --ink: #16211c;
+            --muted: #6b7a72;
+            --bg: #f5f7f6;
+            --line: #e5eae7;
+            --white: #ffffff;
+        }
+
+        html,
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            min-height: 100vh;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Sora', sans-serif;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        /* ─── NAVBAR ─────────────────────────────── */
+        header {
+            background: var(--white);
+            border-bottom: 1px solid var(--line);
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+        .header-inner {
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand img {
+            width: 38px;
+            height: 38px;
+            object-fit: contain;
+        }
+
+        .brand-text h1 {
+            font-size: 13.5px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .brand-text p {
+            font-size: 11px;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--emerald-700);
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 20px;
+            background: var(--emerald-50);
+            transition: background .15s;
+        }
+
+        .back-link:hover {
+            background: #dcece4;
+        }
+
+        .back-link svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        /* ─── PAGE BANNER ────────────────────────── */
+        .banner {
+            position: relative;
+            background: radial-gradient(120% 180% at 12% 0%, var(--emerald-600) 0%, var(--emerald-700) 45%, var(--emerald-900) 100%);
+            color: var(--white);
+            overflow: hidden;
+        }
+
+        .banner::before {
+            content: '';
+            position: absolute;
+            width: 340px;
+            height: 340px;
+            border-radius: 50%;
+            background: rgba(217, 164, 65, .14);
+            top: -140px;
+            right: -60px;
+        }
+
+        .banner-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 18px 24px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 22px;
+            flex-wrap: wrap;
+        }
+
+        .banner-text .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11.5px;
+            font-weight: 700;
+            letter-spacing: .4px;
+            text-transform: uppercase;
+            color: var(--gold-light);
+            margin-bottom: 10px;
+        }
+
+        .banner h2 {
+            font-size: clamp(17px, 2.4vw, 22px);
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .banner .sub {
+            font-size: 12.5px;
+            color: rgba(255, 255, 255, .82);
+            font-weight: 500;
+        }
+
+        .stat-chip {
+            display: flex;
+            gap: 10px;
+        }
+
+        .stat-chip .chip {
+            background: rgba(255, 255, 255, .1);
+            border: 1px solid rgba(255, 255, 255, .18);
+            border-radius: 12px;
+            padding: 10px 16px;
+            text-align: center;
+            min-width: 84px;
+        }
+
+        .stat-chip .chip b {
+            display: block;
+            font-family: 'Sora', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .stat-chip .chip span {
+            font-size: 10.5px;
+            color: rgba(255, 255, 255, .75);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .3px;
+        }
+
+        /* ─── MAIN CONTENT ───────────────────────── */
+        main {
+            flex: 1;
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 34px 24px 60px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 26px;
+            align-items: start;
+        }
+
+        /* ─── INSTRUCTIONS PANEL ─────────────────── */
+        .panel {
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            box-shadow: 0 2px 10px rgba(11, 58, 44, .04);
+            overflow: hidden;
+        }
+
+        .panel-head {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .panel-head .dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: var(--gold);
+            flex-shrink: 0;
+        }
+
+        .panel-head h3 {
+            font-size: 15.5px;
+            font-weight: 700;
+        }
+
+        .panel-body {
+            padding: 6px 24px 22px;
+        }
+
+        .rule {
+            padding: 16px 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .rule:last-child {
+            border-bottom: none;
+        }
+
+        .rule-num {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .rule-num .n {
+            font-family: 'Sora', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--emerald-700);
+            background: var(--emerald-50);
+            border-radius: 6px;
+            padding: 2px 8px;
+        }
+
+        .rule-num h4 {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        .rule ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding-left: 26px;
+        }
+
+        .rule ul li {
+            position: relative;
+            font-size: 12.5px;
+            color: var(--muted);
+            line-height: 1.55;
+        }
+
+        .rule ul li::before {
+            content: '';
+            position: absolute;
+            left: -16px;
+            top: 7px;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--emerald-600);
+        }
+
+        .rule ul li strong {
+            color: var(--ink);
+            font-weight: 600;
+        }
+
+        .closing-note {
+            margin-top: 14px;
+            padding: 14px 16px;
+            background: var(--emerald-50);
+            border-radius: 10px;
+            font-size: 12.5px;
+            color: var(--emerald-900);
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        /* ─── LOGIN CARD ─────────────────────────── */
+        .login-wrap {
+            position: sticky;
+            top: 78px;
+        }
+
+        .login-card {
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            box-shadow: 0 14px 34px rgba(11, 58, 44, .08);
+            overflow: hidden;
+        }
+
+        .login-head {
+            padding: 22px 24px 18px;
+            background: var(--emerald-900);
+            color: var(--white);
+        }
+
+        .login-head .code-pill {
+            display: inline-block;
+            font-family: 'Sora', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--emerald-900);
+            background: var(--gold-light);
+            padding: 4px 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .login-head h3 {
+            font-size: 15.5px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 4px;
+        }
+
+        .login-head p {
+            font-size: 11.5px;
+            color: rgba(255, 255, 255, .7);
+        }
+
+        .login-body {
+            padding: 22px 24px 24px;
+        }
+
+        .field {
+            margin-bottom: 16px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 6px;
+        }
+
+        .field input {
+            width: 100%;
+            padding: 11px 13px;
+            border: 1.5px solid var(--line);
+            border-radius: 9px;
+            font-size: 13.5px;
+            font-family: 'Inter', sans-serif;
+            color: var(--ink);
+            background: var(--bg);
+            transition: border-color .15s, background .15s;
+        }
+
+        .field input::placeholder {
+            color: #a7b3ac;
+        }
+
+        .field input:focus {
+            outline: none;
+            border-color: var(--emerald-600);
+            background: var(--white);
+        }
+
+        .field small {
+            display: block;
+            margin-top: 5px;
+            font-size: 11px;
+            color: var(--muted);
+        }
+
+        .agree {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            padding: 12px 13px;
+            background: var(--emerald-50);
+            border-radius: 9px;
+            margin-bottom: 18px;
+        }
+
+        .agree input {
+            margin-top: 2px;
+            accent-color: var(--emerald-700);
+            width: 15px;
+            height: 15px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+
+        .agree label {
+            font-size: 11.5px;
+            color: var(--emerald-900);
+            line-height: 1.55;
+            cursor: pointer;
+        }
+
+        .start-btn {
+            width: 100%;
+            background: var(--emerald-700);
+            color: var(--white);
+            border: none;
+            padding: 13px 0;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background .15s, transform .15s, opacity .15s;
+        }
+
+        .start-btn:hover:not(:disabled) {
+            background: var(--emerald-600);
+            transform: translateY(-1px);
+        }
+
+        .start-btn:disabled {
+            background: #b9c4bd;
+            cursor: not-allowed;
+        }
+
+        .start-btn:focus-visible {
+            outline: 3px solid var(--blue);
+            outline-offset: 2px;
+        }
+
+        .start-btn svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        .form-msg {
+            margin-top: 12px;
+            font-size: 11.5px;
+            border-radius: 9px;
+            padding: 10px 12px;
+            display: none;
+            line-height: 1.5;
+        }
+
+        .form-msg.show {
+            display: block;
+        }
+
+        .form-msg.error {
+            background: var(--red-50);
+            color: var(--red);
+            border: 1px solid #efd3ca;
+        }
+
+        .form-msg.info {
+            background: var(--emerald-50);
+            color: var(--emerald-900);
+            border: 1px solid #d7e8e0;
+        }
+
+        .security-note {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-top: 16px;
+            font-size: 11px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        .security-note svg {
+            width: 14px;
+            height: 14px;
+            flex-shrink: 0;
+            margin-top: 1px;
+            color: var(--gold);
+        }
+
+        /* ─── FOOTER ─────────────────────────────── */
+        footer {
+            background: var(--white);
+            border-top: 1px solid var(--line);
+            text-align: center;
+            padding: 16px 20px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        footer a {
+            color: var(--emerald-700);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ─── RESPONSIVE ─────────────────────────── */
+        @media (max-width: 880px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+
+            .login-wrap {
+                position: static;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .banner-inner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+                padding: 20px 20px 22px;
+
+            }
+
+            .stat-chip {
+                width: 100%;
+            }
+
+            .stat-chip .chip {
+                flex: 1;
+            }
+
+            main {
+                padding: 26px 16px 44px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .start-btn,
+            .back-link {
+                transition: none;
+            }
+        }
+
+        /* ─── ADDED FOR FIREBASE LOGIN STATE (no existing rules touched) ─── */
+        .spinner {
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(255, 255, 255, .4);
+            border-top-color: var(--white);
+            border-radius: 50%;
+            animation: spin .7s linear infinite;
+            display: none;
+        }
+
+        .start-btn.loading .spinner {
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="header-inner">
+            <div class="brand">
+                <img src="3080.png" alt="Osun State University crest">
+                <div class="brand-text">
+                    <h1>Osun State University, Osogbo</h1>
+                    <p>College of Science, Engineering &amp; Technology</p>
+                </div>
+            </div>
+            <a href="index.html" class="back-link">Back to home page</a>
+        </div>
+    </header>
+
+    <section class="banner">
+        <div class="banner-inner">
+            <div class="banner-text">
+                <h2>Statistical Computing III</h2>
+                <p class="sub">STA 304 (2 Units) &nbsp;&middot;&nbsp; Statistics, Mathematics and Geology</p>
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <!-- INSTRUCTIONS -->
+        <div class="panel">
+            <div class="panel-head">
+                <span class="dot"></span>
+                <h3>Important instructions to all students</h3>
+            </div>
+            <div class="panel-body">
+
+                <div class="rule">
+                    <div class="rule-num"><span class="n">1</span>
+                        <h4>Eligibility</h4>
+                    </div>
+                    <ul>
+                        <li>This Mid-Semester Examination is strictly for duly registered <strong>300-Level</strong>
+                            students offering <strong>STA 304</strong> in the Department(s) of Statistics.</li>
+                        <li>Only students whose details have been registered on the University's Mid-Semester
+                            Examination portal are eligible to participate.</li>
+                        <li>Unauthorized persons will not be granted access to the test under any circumstance.</li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <div class="rule-num"><span class="n">2</span>
+                        <h4>Access to the virtual examination hall</h4>
+                    </div>
+                    <ul>
+                        <li>Your <strong>Matriculation Number</strong> is your unique entrance credential into the
+                            virtual hall.</li>
+                        <li>Enter your matriculation number exactly as officially registered with the University.</li>
+                        <li>Incorrect entry may prevent access to the Mid-Semester Examination.</li>
+                        <li>Each matriculation number is uniquely linked to one candidate and can only be used by the
+                            registered student.</li>
+                        <li>This CAT system is programmed to prevent unauthorized access; no person outside the
+                            approved class list can gain entry.</li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <div class="rule-num"><span class="n">3</span>
+                        <h4>Structure of the examination</h4>
+                    </div>
+                    <ul>
+                        <li>Total number of questions: <strong>60</strong> - Multiple Choice Questions (MCQs).
+                        </li>
+                        <li>Marks per question: <strong>0.5 Mark</strong> &nbsp;&middot;&nbsp; Total obtainable marks:
+                            <strong>30 Marks</strong>.
+                        </li>
+                        <li>Every question carries equal weight. Candidates are advised to attempt all questions.</li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <div class="rule-num"><span class="n">4</span>
+                        <h4>Examination duration</h4>
+                    </div>
+                    <ul>
+                        <li>The examination duration is <strong>30 minutes only</strong>.</li>
+                        <li>The timer begins immediately you click the "Start Test" button and cannot be paused,
+                            stopped, or restarted.</li>
+                        <li>When time expires, the system automatically submits your responses. No additional time
+                            will be granted.</li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <div class="rule-num"><span class="n">5</span>
+                        <h4>One attempt only</h4>
+                    </div>
+                    <ul>
+                        <li>Every student is entitled to <strong>only one attempt</strong>. Once commenced, the
+                            attempt is considered active.</li>
+                        <li>After submission - manual or automatic - you will no longer have access to the
+                            test.</li>
+                        <li>Refreshing the browser, logging out, closing the page, or switching devices after the
+                            test has begun may terminate your session.</li>
+                        <li>Under no circumstance shall a second attempt be granted.</li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <div class="rule-num"><span class="n">6</span>
+                        <h4>Submission of responses</h4>
+                    </div>
+                    <ul>
+                        <li>Review your answers carefully before clicking Submit - once submitted, responses
+                            become final and cannot be modified or recalled.</li>
+                        <li>If time expires before submission, the system will automatically submit your chosen
+                            answers.
+                        </li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <div class="rule-num"><span class="n">7</span>
+                        <h4>Randomization of questions</h4>
+                    </div>
+                    <ul>
+                        <li>An automated random question selection system is used to ensure fairness and integrity.
+                        </li>
+                        <li>Questions and the arrangement of answer options presented to one student will differ
+                            from another.</li>
+                        <li>Every candidate receives an equivalent assessment drawn randomly from the approved
+                            question bank - students are discouraged from comparing answers during the test.</li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <div class="rule-num"><span class="n">8</span>
+                        <h4>Internet connectivity</h4>
+                    </div>
+                    <ul>
+                        <li>Candidates are solely responsible for reliable internet connectivity before beginning the
+                            test.</li>
+                        <li>Before clicking "Start Test", ensure a stable connection, sufficient battery or power
+                            source, and strong network coverage.</li>
+                        <li>Do not begin the test unless fully satisfied with your connection quality.</li>
+                    </ul>
+                </div>
+                <div class="rule">
+                    <div class="rule-num"><span class="n">9</span>
+                        <h4>Recommended devices</h4>
+                    </div>
+                    <ul>
+                        <li>Desktop computer, Laptop computer <strong>(highly recommended)</strong>, Tablet, or
+                            Smartphone with an updated web browser.</li>
+                        <li>Before starting: close unnecessary applications, disable automatic updates, update your
+                            browser, and keep your device connected to power where possible.</li>
+                    </ul>
+                </div>
+
+                <div class="closing-note">
+                    By entering your matriculation number and clicking <strong>"Start Test"</strong>, you confirm
+                    that you have read, understood, and agreed to comply with all the Mid-Semester Examination rules
+                    and regulations stated above. We wish you an excellent performance.
+                </div>
+            </div>
+        </div>
+
+        <!-- LOGIN -->
+        <div class="login-wrap">
+            <div class="login-card">
+                <div class="login-head">
+                    <h3>Student Login</h3>
+                    <p>Enter your matric number to enter the virtual hall.</p>
+                </div>
+                <div class="login-body">
+                    <form id="loginForm" novalidate>
+                        <div class="field">
+                            <label for="matric">Matriculation number</label>
+                            <input type="text" id="matric" name="matric" autocomplete="off" required>
+                        </div>
+
+                        <button type="submit" class="start-btn" id="startBtn">
+                            <span class="spinner"></span>
+                            <span id="startBtnLabel">Login</span>
+                        </button>
+                        <div class="form-msg" id="formMsg"></div>
+                    </form>
+                    <div class="security-note">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        </svg>
+                        Only students on the approved class list for STA 304 can gain entry. Access is verified
+                        against the University's Mid-Semester Examination portal.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Course Lecturer for 2nd Semester of 2025/2026 Academic Session: Dr. Timothy A. Ogunleye
+            &nbsp;|&nbsp; <a href="https://timothy-ogunleye.vercel.app/" target="_blank">Lecturer Profile</a></p>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import {
+            getFirestore, doc, getDoc, setDoc, serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC1VmwfA08C5hjGSIA6GJAGxq7rt6mlp3E",
+            authDomain: "uniosun-cbt-e1d93.firebaseapp.com",
+            projectId: "uniosun-cbt-e1d93",
+            storageBucket: "uniosun-cbt-e1d93.firebasestorage.app",
+            messagingSenderId: "10024356331",
+            appId: "1:10024356331:web:a81d560a29021a908331ae"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Course-specific collection names (change these if you reuse this page for another course)
+        const COURSE_CODE = "STA304";
+        const STUDENTS_COLLECTION = `${COURSE_CODE}_students`;  // now checks STA304_students
+        const COURSE_STUDENTS_COLLECTION = `${COURSE_CODE}_students`;
+        const COURSE_EXAMS_COLLECTION = `${COURSE_CODE}_exams`;
+
+
+        const form = document.getElementById('loginForm');
+        const matricInput = document.getElementById('matric');
+        const msg = document.getElementById('formMsg');
+        const startBtn = document.getElementById('startBtn');
+        const startBtnLabel = document.getElementById('startBtnLabel');
+
+        function normalizeMatric(input) {
+            return input.trim().toUpperCase().replace(/\s+/g, '');
+        }
+
+        function toDocId(matric) {
+            // Firestore doc IDs cannot contain a forward slash
+            return matric.replace(/\//g, '_');
+        }
+
+        function toTitleCase(str) {
+            return str
+                .trim()
+                .toLowerCase()
+                .split(/\s+/)
+                .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+                .join(' ');
+        }
+
+        function showMsg(text, type) {
+            msg.textContent = text;
+            msg.classList.remove('show', 'error', 'info');
+            msg.classList.add('show', type);
+        }
+
+        function setLoading(isLoading, label) {
+            startBtn.disabled = isLoading;
+            startBtn.classList.toggle('loading', isLoading);
+            startBtnLabel.textContent = label;
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            msg.classList.remove('show', 'error', 'info');
+            matricInput.style.borderColor = '';
+
+            const raw = matricInput.value;
+            const val = normalizeMatric(raw);
+
+            if (!val) {
+                showMsg('Please enter your matriculation number.', 'error');
+                matricInput.style.borderColor = '#b3452c';
+                matricInput.focus();
+                return;
+            }
+
+            const docId = toDocId(val);
+            setLoading(true, 'Verifying…');
+
+            try {
+                // 1. Validate against the approved class list
+                const studentSnap = await getDoc(doc(db, STUDENTS_COLLECTION, docId));
+
+                if (!studentSnap.exists()) {
+                    setLoading(false, 'Start Test');
+                    showMsg('Matriculation number not found on the approved class list for STA 304. Please check and try again.', 'error');
+                    matricInput.style.borderColor = '#b3452c';
+                    matricInput.focus();
+                    return;
+                }
+
+                const masterData = studentSnap.data();
+                const name = toTitleCase(masterData.name || 'Student');
+                const department = masterData.department || 'Statistics';
+
+                // 2. Create / sync this student's record under the STA 304 course node
+                await setDoc(doc(db, COURSE_STUDENTS_COLLECTION, docId), {
+                    matric: val,
+                    name,
+                    department,
+                    level: '300',
+                    updatedAt: serverTimestamp()
+                }, { merge: true });
+
+                // 3. Create the exam record on first login only (never overwrite an existing one)
+                const examRef = doc(db, COURSE_EXAMS_COLLECTION, docId);
+                const examSnap = await getDoc(examRef);
+
+                if (!examSnap.exists()) {
+                    await setDoc(examRef, {
+                        matric: val,
+                        status: 'not_taken',
+                        score: 0,
+                        startedAt: null,
+                        submittedAt: null,
+                        createdAt: serverTimestamp()
+                    });
+                }
+
+                // 4. Store session data for the dashboard
+                sessionStorage.setItem('cbt_student', JSON.stringify({
+                    docId,
+                    matric: val,
+                    name,
+                    department,
+                    level: '300',
+                    course: 'STA 304'
+                }));
+
+                setLoading(true, 'Verified! Redirecting…');
+                showMsg('Login successful. Redirecting to your dashboard…', 'info');
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 600);
+
+            } catch (error) {
+                console.error('Firestore error:', error);
+                setLoading(false, 'Start Test');
+                showMsg('Network error while contacting the examination portal. Please check your connection and try again.', 'error');
+            }
+        }
+
+        form.addEventListener('submit', handleLogin);
+
+        matricInput.addEventListener('input', () => {
+            matricInput.style.borderColor = '';
+            msg.classList.remove('show', 'error', 'info');
+        });
+
+        matricInput.focus();
+    </script>
+
+</body>
+
+</html>

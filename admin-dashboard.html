@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard | OSUN STATE UNIVERSITY, OSOGBO, NIGERIA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --emerald-900: #0b3a2c;
+            --emerald-700: #12583f;
+            --emerald-600: #187b58;
+            --emerald-50: #eaf3ef;
+            --gold: #d9a441;
+            --gold-light: #ecc276;
+            --blue: #3b6ea5;
+            --red: #b3452c;
+            --red-50: #fbeeea;
+            --ink: #16211c;
+            --muted: #6b7a72;
+            --bg: #f5f7f6;
+            --line: #e5eae7;
+            --white: #ffffff;
+        }
+
+        html,
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            min-height: 100vh;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Sora', sans-serif;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        /* ─── SITE HEADER (shared with login pages) ─── */
+        header.site-header {
+            background: var(--white);
+            border-bottom: 1px solid var(--line);
+            position: sticky;
+            top: 0;
+            z-index: 20;
+        }
+
+        .header-inner {
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 12px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand img {
+            width: 38px;
+            height: 38px;
+            object-fit: contain;
+        }
+
+        .brand-text h1 {
+            font-size: 13.5px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .brand-text p {
+            font-size: 11px;
+            color: var(--muted);
+            font-weight: 500;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--emerald-700);
+            text-decoration: none;
+            padding: 8px 14px;
+            border-radius: 20px;
+            background: var(--emerald-50);
+            border: none;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: background .15s;
+        }
+
+        .back-link:hover {
+            background: #dcece4;
+        }
+
+        /* ─── BANNER (shared with login pages) ─── */
+        .banner {
+            position: relative;
+            background: radial-gradient(120% 180% at 12% 0%, var(--emerald-600) 0%, var(--emerald-700) 45%, var(--emerald-900) 100%);
+            color: var(--white);
+            overflow: hidden;
+        }
+
+        .banner::before {
+            content: '';
+            position: absolute;
+            width: 340px;
+            height: 340px;
+            border-radius: 50%;
+            background: rgba(217, 164, 65, .14);
+            top: -140px;
+            right: -60px;
+        }
+
+        .banner-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 18px 24px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 22px;
+            flex-wrap: wrap;
+        }
+
+        .banner h2 {
+            font-size: clamp(17px, 2.4vw, 22px);
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .banner .sub {
+            font-size: 12.5px;
+            color: rgba(255, 255, 255, .82);
+            font-weight: 500;
+        }
+
+        main {
+            flex: 1;
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 28px 24px 60px;
+            width: 100%;
+        }
+
+        /* ─── Quick actions ─── */
+        .actions-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 9px;
+            padding: 11px 18px;
+            font-size: 13.5px;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            transition: background .15s, transform .15s;
+        }
+
+        .btn-primary {
+            background: var(--emerald-700);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--emerald-600);
+            transform: translateY(-1px);
+        }
+
+        .btn-gold {
+            background: var(--gold);
+            color: var(--emerald-900);
+        }
+
+        .btn-gold:hover {
+            background: var(--gold-light);
+            transform: translateY(-1px);
+        }
+
+        .btn-outline {
+            background: var(--white);
+            color: var(--emerald-700);
+            border: 1.5px solid var(--emerald-600);
+        }
+
+        .btn-outline:hover {
+            background: var(--emerald-50);
+        }
+
+        .btn svg {
+            width: 15px;
+            height: 15px;
+        }
+
+        /* ─── Stats overview ─── */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 14px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 18px 20px;
+            box-shadow: 0 2px 10px rgba(11, 58, 44, .04);
+        }
+
+        .stat-card .label {
+            font-size: 11.5px;
+            font-weight: 600;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: .3px;
+            margin-bottom: 8px;
+        }
+
+        .stat-card .value {
+            font-family: 'Sora', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            color: var(--emerald-900);
+        }
+
+        .stat-card .value.gold {
+            color: var(--gold);
+        }
+
+        /* ─── Breakdown table ─── */
+        .section-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .card {
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            box-shadow: 0 2px 10px rgba(11, 58, 44, .05);
+            overflow: hidden;
+            margin-bottom: 28px;
+        }
+
+        .card-head {
+            padding: 16px 22px;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .card-head h2 {
+            font-size: 14.5px;
+        }
+
+        .count-pill {
+            background: var(--emerald-50);
+            color: var(--emerald-900);
+            font-size: 11.5px;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead th {
+            text-align: left;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+            color: var(--muted);
+            padding: 12px 22px;
+            border-bottom: 1px solid var(--line);
+            background: #fbfcfb;
+        }
+
+        tbody td {
+            padding: 12px 22px;
+            font-size: 13px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: #fafbfa;
+        }
+
+        .matric-cell {
+            font-weight: 700;
+            color: var(--emerald-900);
+        }
+
+        .dept-tag,
+        .status-tag {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 20px;
+            background: var(--emerald-50);
+            color: var(--emerald-900);
+        }
+
+        .status-tag.pending {
+            background: #fdf3e3;
+            color: #8a5a12;
+        }
+
+        .row-actions {
+            text-align: right;
+        }
+
+        .icon-btn {
+            border: none;
+            background: none;
+            cursor: pointer;
+            padding: 6px;
+            border-radius: 7px;
+            color: var(--muted);
+            display: inline-flex;
+        }
+
+        .icon-btn:hover {
+            background: var(--red-50);
+            color: var(--red);
+        }
+
+        .icon-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .empty-state,
+        .loading-state {
+            padding: 50px 20px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        /* ─── Toolbar ─── */
+        .toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 18px;
+        }
+
+        .toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        select,
+        input {
+            font-family: 'Inter', sans-serif;
+            font-size: 13px;
+        }
+
+        .course-select,
+        .dept-select {
+            padding: 10px 14px;
+            border: 1.5px solid var(--line);
+            border-radius: 9px;
+            background: var(--white);
+            color: var(--ink);
+            font-weight: 600;
+            min-width: 200px;
+            cursor: pointer;
+        }
+
+        .search-input {
+            padding: 10px 14px;
+            border: 1.5px solid var(--line);
+            border-radius: 9px;
+            background: var(--white);
+            min-width: 220px;
+        }
+
+        .search-input:focus,
+        .course-select:focus,
+        .dept-select:focus {
+            outline: none;
+            border-color: var(--emerald-600);
+        }
+
+        /* ─── Modal ─── */
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(11, 22, 17, .45);
+            backdrop-filter: blur(2px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            padding: 20px;
+        }
+
+        .overlay.show {
+            display: flex;
+        }
+
+        .dialog {
+            background: var(--white);
+            border-radius: 18px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 24px 60px rgba(11, 58, 44, .25);
+            overflow: hidden;
+            animation: pop .18s ease;
+        }
+
+        @keyframes pop {
+            from {
+                opacity: 0;
+                transform: translateY(8px) scale(.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .dialog-head {
+            padding: 22px 26px 16px;
+            background: linear-gradient(135deg, var(--emerald-700), var(--emerald-900));
+            color: var(--white);
+        }
+
+        .dialog-head h3 {
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .dialog-head p {
+            font-size: 12px;
+            color: rgba(255, 255, 255, .75);
+        }
+
+        .dialog-body {
+            padding: 22px 26px 6px;
+        }
+
+        .field {
+            margin-bottom: 16px;
+        }
+
+        .field label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--ink);
+        }
+
+        .field input,
+        .field select {
+            width: 100%;
+            padding: 11px 13px;
+            border: 1.5px solid var(--line);
+            border-radius: 9px;
+            background: var(--bg);
+            color: var(--ink);
+        }
+
+        .field input:focus,
+        .field select:focus {
+            outline: none;
+            border-color: var(--emerald-600);
+            background: var(--white);
+        }
+
+        .field-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .field-err {
+            font-size: 11px;
+            color: var(--red);
+            margin-top: 5px;
+            display: none;
+        }
+
+        .field.invalid input,
+        .field.invalid select {
+            border-color: var(--red);
+        }
+
+        .field.invalid .field-err {
+            display: block;
+        }
+
+        .dialog-msg {
+            font-size: 12px;
+            padding: 10px 13px;
+            border-radius: 9px;
+            margin: 0 26px 14px;
+            display: none;
+        }
+
+        .dialog-msg.show {
+            display: block;
+        }
+
+        .dialog-msg.error {
+            background: var(--red-50);
+            color: var(--red);
+            border: 1px solid #efd3ca;
+        }
+
+        .dialog-msg.info {
+            background: var(--emerald-50);
+            color: var(--emerald-900);
+            border: 1px solid #d7e8e0;
+        }
+
+        .dialog-foot {
+            padding: 16px 26px 24px;
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .btn-ghost {
+            background: none;
+            color: var(--muted);
+            border: 1.5px solid var(--line);
+        }
+
+        .btn-ghost:hover {
+            background: var(--bg);
+        }
+
+        .btn:disabled {
+            opacity: .55;
+            cursor: not-allowed;
+        }
+
+        .confirm-dialog {
+            max-width: 380px;
+        }
+
+        .confirm-dialog .dialog-head {
+            background: linear-gradient(135deg, var(--red), #8a3320);
+        }
+
+        .btn-danger {
+            background: var(--red);
+            color: var(--white);
+        }
+
+        .btn-danger:hover {
+            background: #963a24;
+        }
+
+        /* ─── FOOTER ─── */
+        footer {
+            background: var(--white);
+            border-top: 1px solid var(--line);
+            text-align: center;
+            padding: 16px 20px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        footer a {
+            color: var(--emerald-700);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 620px) {
+            .field-row {
+                grid-template-columns: 1fr;
+            }
+
+            thead th:nth-child(3),
+            tbody td:nth-child(3) {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <div class="brand">
+                <img src="3080.png" alt="Osun State University crest">
+                <div class="brand-text">
+                    <h1>Osun State University, Osogbo</h1>
+                    <p>College of Science, Engineering &amp; Technology</p>
+                </div>
+            </div>
+            <button class="back-link" id="logoutBtn">Log out</button>
+        </div>
+    </header>
+
+    <section class="banner">
+        <div class="banner-inner">
+            <div>
+                <h2>Admin Dashboard</h2>
+                <p class="sub">Department of Statistics &nbsp;&middot;&nbsp; Manage students &amp; view results</p>
+            </div>
+        </div>
+    </section>
+
+    <main>
+        <div class="actions-row">
+            <a href="admin-check-course.html" class="btn btn-gold">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M9 11l3 3L22 4" />
+                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                </svg>
+                Check Student Result
+            </a>
+            <a href="seed-student.html" class="btn btn-outline">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+                </svg>
+                Go to Approve All Students
+            </a>
+        </div>
+
+        <div class="section-title">Overview</div>
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <div class="label">Total students</div>
+                <div class="value" id="statTotalStudents">—</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Courses</div>
+                <div class="value" id="statTotalCourses">—</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Exams taken</div>
+                <div class="value gold" id="statTaken">—</div>
+            </div>
+            <div class="stat-card">
+                <div class="label">Exams pending</div>
+                <div class="value" id="statPending">—</div>
+            </div>
+        </div>
+
+        <div class="section-title">Students &amp; exams by course / department</div>
+        <div class="card">
+            <div class="card-head">
+                <h2>Breakdown</h2>
+                <span class="count-pill" id="breakdownCount">&nbsp;</span>
+            </div>
+            <div id="breakdownWrap">
+                <div class="loading-state">Loading…</div>
+            </div>
+        </div>
+
+        <div class="section-title">Manage students</div>
+        <div class="toolbar">
+            <div class="toolbar-left">
+                <select id="courseSelect" class="course-select"></select>
+                <select id="deptFilterSelect" class="dept-select"></select>
+                <input type="text" id="searchInput" class="search-input" placeholder="Search name or matric…" />
+            </div>
+            <button class="btn btn-primary" id="openAddBtn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M12 5v14M5 12h14" />
+                </svg>
+                Add student
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="card-head">
+                <h2 id="cardTitle">&nbsp;</h2>
+                <span class="count-pill" id="countPill">0 students</span>
+            </div>
+            <div id="tableWrap">
+                <div class="loading-state">Loading…</div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Course Lecturer for 2nd Semester of 2025/2026 Academic Session: Dr. Timothy A. Ogunleye
+            &nbsp;|&nbsp; <a href="https://timothy-ogunleye.vercel.app/" target="_blank">Lecturer Profile</a></p>
+    </footer>
+
+    <!-- Add student dialog -->
+    <div class="overlay" id="addOverlay">
+        <div class="dialog">
+            <div class="dialog-head">
+                <h3>Add student</h3>
+                <p>They'll be added to the approved list for the selected course</p>
+            </div>
+            <div class="dialog-body">
+                <div class="field" id="f-name">
+                    <label for="in-name">Full name</label>
+                    <input type="text" id="in-name" placeholder="e.g. Adewale Precious Oluwatobi" />
+                    <div class="field-err">Enter the student's full name</div>
+                </div>
+                <div class="field" id="f-matric">
+                    <label for="in-matric">Matriculation number</label>
+                    <input type="text" id="in-matric" placeholder="e.g. 2025/73230" />
+                    <div class="field-err">Enter a valid matriculation number</div>
+                </div>
+                <div class="field-row">
+                    <div class="field" id="f-course">
+                        <label for="in-course">Course</label>
+                        <select id="in-course"></select>
+                    </div>
+                    <div class="field" id="f-level">
+                        <label for="in-level">Level</label>
+                        <select id="in-level">
+                            <option value="100">100 Level</option>
+                            <option value="200">200 Level</option>
+                            <option value="300">300 Level</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="field" id="f-dept">
+                    <label for="in-dept">Department</label>
+                    <select id="in-dept"></select>
+                </div>
+            </div>
+            <div class="dialog-msg" id="addMsg"></div>
+            <div class="dialog-foot">
+                <button class="btn btn-ghost" id="cancelAddBtn">Cancel</button>
+                <button class="btn btn-primary" id="saveAddBtn">Add student</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete confirm dialog -->
+    <div class="overlay" id="deleteOverlay">
+        <div class="dialog confirm-dialog">
+            <div class="dialog-head">
+                <h3>Remove student</h3>
+                <p id="deleteDesc">This will remove them from the approved list.</p>
+            </div>
+            <div class="dialog-foot" style="padding-top: 22px;">
+                <button class="btn btn-ghost" id="cancelDeleteBtn">Cancel</button>
+                <button class="btn btn-danger" id="confirmDeleteBtn">Remove</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ─── Guard: only allow entry if admin has logged in this session ───
+        if (!sessionStorage.getItem('cbt_admin')) {
+            window.location.href = 'admin-login.html';
+        }
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            sessionStorage.removeItem('cbt_admin');
+            window.location.href = 'admin-login.html';
+        });
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import {
+            getFirestore, collection, getDocs, doc, setDoc, deleteDoc
+        } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyC1VmwfA08C5hjGSIA6GJAGxq7rt6mlp3E",
+            authDomain: "uniosun-cbt-e1d93.firebaseapp.com",
+            projectId: "uniosun-cbt-e1d93",
+            storageBucket: "uniosun-cbt-e1d93.firebasestorage.app",
+            messagingSenderId: "10024356331",
+            appId: "1:10024356331:web:a81d560a29021a908331ae"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // ── Known courses. Add more here as new courses are introduced. ──
+        // `code` is the base course code used to build the matching exams collection name.
+        const COURSES = {
+            STA104_114_students: { code: "STA104_114", label: "STA 104/114 -100 Level", departments: ["Statistics", "Industrial Mathematics", "Geology"], level: "100" },
+            STA220_214_students: { code: "STA220_214", label: "STA 220/214 -200 Level", departments: ["Statistics"], level: "200" },
+            STA308_students: { code: "STA308", label: "STA 308 -300 Level", departments: ["Statistics"], level: "300" },
+            STA304_students: { code: "STA304", label: "STA 304 -300 Level", departments: ["Statistics"], level: "300" },
+        };
+
+        function normalizeMatric(m) { return m.trim().toUpperCase().replace(/\s+/g, ''); }
+        function toDocId(matric) { return matric.replace(/\//g, '_'); }
+        function toTitleCase(str) {
+            return str.trim().toLowerCase().split(/\s+/)
+                .map(w => w.charAt(0).toUpperCase() + w.slice(1))
+                .join(' ');
+        }
+
+        // ── Elements ──
+        const courseSelect = document.getElementById('courseSelect');
+        const deptFilterSelect = document.getElementById('deptFilterSelect');
+        const searchInput = document.getElementById('searchInput');
+        const cardTitle = document.getElementById('cardTitle');
+        const countPill = document.getElementById('countPill');
+        const tableWrap = document.getElementById('tableWrap');
+
+        const openAddBtn = document.getElementById('openAddBtn');
+        const addOverlay = document.getElementById('addOverlay');
+        const cancelAddBtn = document.getElementById('cancelAddBtn');
+        const saveAddBtn = document.getElementById('saveAddBtn');
+        const addMsg = document.getElementById('addMsg');
+
+        const inName = document.getElementById('in-name');
+        const inMatric = document.getElementById('in-matric');
+        const inCourse = document.getElementById('in-course');
+        const inLevel = document.getElementById('in-level');
+        const inDept = document.getElementById('in-dept');
+
+        const deleteOverlay = document.getElementById('deleteOverlay');
+        const deleteDesc = document.getElementById('deleteDesc');
+        const cancelDeleteBtn = document.getElementById('cancelDeleteBtn');
+        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
+        const statTotalStudents = document.getElementById('statTotalStudents');
+        const statTotalCourses = document.getElementById('statTotalCourses');
+        const statTaken = document.getElementById('statTaken');
+        const statPending = document.getElementById('statPending');
+        const breakdownWrap = document.getElementById('breakdownWrap');
+        const breakdownCount = document.getElementById('breakdownCount');
+
+        let currentStudents = [];
+        let pendingDelete = null; // { docId, name }
+
+        // Populate course dropdowns
+        for (const [key, cfg] of Object.entries(COURSES)) {
+            const opt1 = document.createElement('option');
+            opt1.value = key; opt1.textContent = cfg.label;
+            courseSelect.appendChild(opt1);
+
+            const opt2 = document.createElement('option');
+            opt2.value = key; opt2.textContent = cfg.label;
+            inCourse.appendChild(opt2);
+        }
+
+        function refreshDeptOptions() {
+            const cfg = COURSES[inCourse.value];
+            inDept.innerHTML = '';
+            cfg.departments.forEach(d => {
+                const o = document.createElement('option');
+                o.value = d; o.textContent = d;
+                inDept.appendChild(o);
+            });
+            inLevel.value = cfg.level;
+        }
+
+        function refreshDeptFilterOptions() {
+            const cfg = COURSES[courseSelect.value];
+            deptFilterSelect.innerHTML = '';
+            const allOpt = document.createElement('option');
+            allOpt.value = 'all'; allOpt.textContent = 'All departments';
+            deptFilterSelect.appendChild(allOpt);
+            cfg.departments.forEach(d => {
+                const o = document.createElement('option');
+                o.value = d; o.textContent = d;
+                deptFilterSelect.appendChild(o);
+            });
+        }
+
+        inCourse.addEventListener('change', refreshDeptOptions);
+
+        // ── Load & render student list ──
+        async function loadStudents() {
+            const courseKey = courseSelect.value;
+            const cfg = COURSES[courseKey];
+            cardTitle.textContent = cfg.label;
+            refreshDeptFilterOptions();
+            tableWrap.innerHTML = '<div class="loading-state">Loading…</div>';
+
+            try {
+                const snap = await getDocs(collection(db, courseKey));
+                currentStudents = [];
+                snap.forEach(d => currentStudents.push({ docId: d.id, ...d.data() }));
+                currentStudents.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+                renderTable();
+            } catch (err) {
+                tableWrap.innerHTML = `<div class="empty-state">Couldn't load students: ${err.message}</div>`;
+            }
+        }
+
+        function renderTable() {
+            const q = searchInput.value.trim().toLowerCase();
+            const dept = deptFilterSelect.value;
+            const filtered = currentStudents.filter(s => {
+                const matchesSearch = !q || (s.name || '').toLowerCase().includes(q) || (s.matric || '').toLowerCase().includes(q);
+                const matchesDept = !dept || dept === 'all' || s.department === dept;
+                return matchesSearch && matchesDept;
+            });
+
+            countPill.textContent = `${currentStudents.length} student${currentStudents.length === 1 ? '' : 's'}`;
+
+            if (filtered.length === 0) {
+                tableWrap.innerHTML = `<div class="empty-state">${currentStudents.length === 0 ? 'No students added to this course yet.' : 'No matches for your filters.'}</div>`;
+                return;
+            }
+
+            const rows = filtered.map(s => `
+                <tr data-doc-id="${s.docId}">
+                    <td class="matric-cell">${s.matric || ''}</td>
+                    <td>${s.name || ''}</td>
+                    <td><span class="dept-tag">${s.department || ''}</span></td>
+                    <td class="row-actions">
+                        <button class="icon-btn delete-row-btn" title="Remove student">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2m2 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14z"/></svg>
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+
+            tableWrap.innerHTML = `
+                <table>
+                    <thead>
+                        <tr><th>Matric</th><th>Name</th><th>Department</th><th></th></tr>
+                    </thead>
+                    <tbody>${rows}</tbody>
+                </table>
+            `;
+
+            tableWrap.querySelectorAll('.delete-row-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const docId = e.target.closest('tr').dataset.docId;
+                    const student = currentStudents.find(s => s.docId === docId);
+                    openDeleteConfirm(docId, student);
+                });
+            });
+        }
+
+        courseSelect.addEventListener('change', loadStudents);
+        deptFilterSelect.addEventListener('change', renderTable);
+        searchInput.addEventListener('input', renderTable);
+
+        // ── Add dialog ──
+        function openAddDialog() {
+            inName.value = '';
+            inMatric.value = '';
+            inCourse.value = courseSelect.value;
+            refreshDeptOptions();
+            addMsg.classList.remove('show', 'error', 'info');
+            [document.getElementById('f-name'), document.getElementById('f-matric')].forEach(f => f.classList.remove('invalid'));
+            addOverlay.classList.add('show');
+            setTimeout(() => inName.focus(), 50);
+        }
+
+        function closeAddDialog() { addOverlay.classList.remove('show'); }
+
+        openAddBtn.addEventListener('click', openAddDialog);
+        cancelAddBtn.addEventListener('click', closeAddDialog);
+        addOverlay.addEventListener('click', (e) => { if (e.target === addOverlay) closeAddDialog(); });
+
+        async function handleSaveAdd() {
+            const nameField = document.getElementById('f-name');
+            const matricField = document.getElementById('f-matric');
+            nameField.classList.remove('invalid');
+            matricField.classList.remove('invalid');
+            addMsg.classList.remove('show', 'error', 'info');
+
+            const rawName = inName.value.trim();
+            const rawMatric = inMatric.value.trim();
+
+            let hasError = false;
+            if (!rawName) { nameField.classList.add('invalid'); hasError = true; }
+            if (!rawMatric) { matricField.classList.add('invalid'); hasError = true; }
+            if (hasError) return;
+
+            const matric = normalizeMatric(rawMatric);
+            const docId = toDocId(matric);
+            const name = toTitleCase(rawName);
+            const courseKey = inCourse.value;
+            const department = inDept.value;
+            const level = inLevel.value;
+
+            saveAddBtn.disabled = true;
+            saveAddBtn.textContent = 'Adding…';
+
+            try {
+                await setDoc(doc(db, courseKey, docId), { matric, name, department, level }, { merge: true });
+
+                addMsg.textContent = `${name} was added to ${COURSES[courseKey].label}.`;
+                addMsg.classList.add('show', 'info');
+
+                if (courseKey === courseSelect.value) {
+                    await loadStudents();
+                }
+                await loadOverview();
+                setTimeout(closeAddDialog, 900);
+            } catch (err) {
+                addMsg.textContent = `Couldn't add student: ${err.message}`;
+                addMsg.classList.add('show', 'error');
+            } finally {
+                saveAddBtn.disabled = false;
+                saveAddBtn.textContent = 'Add student';
+            }
+        }
+
+        saveAddBtn.addEventListener('click', handleSaveAdd);
+
+        // ── Delete dialog ──
+        function openDeleteConfirm(docId, student) {
+            pendingDelete = { docId, name: student?.name, matric: student?.matric };
+            deleteDesc.textContent = `Remove ${student?.name || 'this student'} (${student?.matric || docId}) from ${cardTitle.textContent}? This can't be undone.`;
+            deleteOverlay.classList.add('show');
+        }
+
+        function closeDeleteConfirm() {
+            deleteOverlay.classList.remove('show');
+            pendingDelete = null;
+        }
+
+        cancelDeleteBtn.addEventListener('click', closeDeleteConfirm);
+        deleteOverlay.addEventListener('click', (e) => { if (e.target === deleteOverlay) closeDeleteConfirm(); });
+
+        confirmDeleteBtn.addEventListener('click', async () => {
+            if (!pendingDelete) return;
+            confirmDeleteBtn.disabled = true;
+            confirmDeleteBtn.textContent = 'Removing…';
+            try {
+                await deleteDoc(doc(db, courseSelect.value, pendingDelete.docId));
+                closeDeleteConfirm();
+                await loadStudents();
+                await loadOverview();
+            } catch (err) {
+                deleteDesc.textContent = `Couldn't remove student: ${err.message}`;
+            } finally {
+                confirmDeleteBtn.disabled = false;
+                confirmDeleteBtn.textContent = 'Remove';
+            }
+        });
+
+        // ── Overview: totals + per course/department breakdown ──
+        async function loadOverview() {
+            breakdownWrap.innerHTML = '<div class="loading-state">Loading…</div>';
+
+            let totalStudents = 0;
+            let totalTaken = 0;
+            let totalPending = 0;
+            const breakdownRows = [];
+
+            for (const [courseKey, cfg] of Object.entries(COURSES)) {
+                try {
+                    const [studentsSnap, examsSnap] = await Promise.all([
+                        getDocs(collection(db, courseKey)),
+                        getDocs(collection(db, `${cfg.code}_exams`))
+                    ]);
+
+                    const examStatusById = {};
+                    examsSnap.forEach(d => { examStatusById[d.id] = d.data().status || 'not_taken'; });
+
+                    const studentsByDept = {};
+                    studentsSnap.forEach(d => {
+                        const s = d.data();
+                        const dept = s.department || 'Unspecified';
+                        if (!studentsByDept[dept]) studentsByDept[dept] = { total: 0, taken: 0 };
+                        studentsByDept[dept].total += 1;
+                        if (examStatusById[d.id] === 'taken') studentsByDept[dept].taken += 1;
+                    });
+
+                    for (const [dept, counts] of Object.entries(studentsByDept)) {
+                        totalStudents += counts.total;
+                        totalTaken += counts.taken;
+                        totalPending += (counts.total - counts.taken);
+                        breakdownRows.push({ course: cfg.label, dept, total: counts.total, taken: counts.taken, pending: counts.total - counts.taken });
+                    }
+                } catch (err) {
+                    breakdownRows.push({ course: cfg.label, dept: 'Error', total: '—', taken: '—', pending: '—' });
+                }
+            }
+
+            statTotalStudents.textContent = totalStudents;
+            statTotalCourses.textContent = Object.keys(COURSES).length;
+            statTaken.textContent = totalTaken;
+            statPending.textContent = totalPending;
+            breakdownCount.textContent = `${breakdownRows.length} row${breakdownRows.length === 1 ? '' : 's'}`;
+
+            if (breakdownRows.length === 0) {
+                breakdownWrap.innerHTML = '<div class="empty-state">No data yet.</div>';
+                return;
+            }
+
+            const rows = breakdownRows.map(r => `
+                <tr>
+                    <td>${r.course}</td>
+                    <td><span class="dept-tag">${r.dept}</span></td>
+                    <td>${r.total}</td>
+                    <td><span class="status-tag">${r.taken} taken</span></td>
+                    <td><span class="status-tag pending">${r.pending} pending</span></td>
+                </tr>
+            `).join('');
+
+            breakdownWrap.innerHTML = `
+                <table>
+                    <thead><tr><th>Course</th><th>Department</th><th>Students</th><th>Exams taken</th><th>Pending</th></tr></thead>
+                    <tbody>${rows}</tbody>
+                </table>
+            `;
+        }
+
+        // ── Init ──
+        refreshDeptOptions();
+        loadStudents();
+        loadOverview();
+    </script>
+</body>
+
+</html>
